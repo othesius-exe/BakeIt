@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BakeIt</string>
+
+    <!-- Placeholder Strings -->
+    <string name="recipe">Recipe Title</string>
+    <string name="description">Short description goes here</string>
+</resources>
