@@ -3,5 +3,13 @@
 
     <!-- Placeholder Strings -->
     <string name="recipe">Recipe Title</string>
-    <string name="description">Short description goes here</string>
+    <string name="description">Short description goes here.</string>
+    <string name="ingredient">Ingredient 1</string>
+    <string name="measurement">TBSP, G, CUPS, etc..</string>
+    <string name="quantity">.5, 2, 1, etc..</string>
+    <string name="direction">Do these things in this order.</string>
+    <string name="step">1:</string>
+
+    <!-- Error Strings -->
+    <string name="error">Could not find Recipe</string>
 </resources>

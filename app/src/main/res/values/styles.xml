@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,14 +11,13 @@
     <!-- General CardView Style -->
     <style name="card_style">
         <item name="android:layout_height">@dimen/card_height</item>
-        <item name="android:layout_width">@dimen/card_width</item>
         <item name="android:layout_marginRight">@dimen/card_right_left_margin</item>
         <item name="android:layout_marginLeft">@dimen/card_right_left_margin</item>
         <item name="android:layout_marginTop">@dimen/card_top_bottom_margin</item>
         <item name="android:textSize">@dimen/primaryText</item>
     </style>
 
-    <!-- Recipe Title Text Style within CardView -->
+    <!-- RecipeDirections Title Text Style within CardView -->
     <style name="card_title_view_style">
         <item name="android:layout_width">@dimen/card_title_width</item>
         <item name="android:layout_marginLeft">@dimen/text_view_right_left_margin</item>
@@ -44,6 +43,40 @@
         <item name="android:maxLines">2</item>
         <item name="android:gravity">left</item>
         <item name="android:text">@string/description</item>
+    </style>
+
+    <style name="view_pager_title_strip_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/title_strip_height</item>
+        <item name="android:textColor">@color/accentText</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <!-- Directions/Ingredient List style -->
+    <style name="title_view_style">
+        <item name="android:layout_width">@dimen/card_title_width</item>
+        <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
+        <item name="android:paddingRight">@dimen/text_view_right_left_padding</item>
+        <item name="android:layout_marginBottom">@dimen/text_view_top_bottom_margin</item>
+        <item name="android:textSize">@dimen/headerText</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:text">@string/recipe</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/text_view_height</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/primaryText</item>
+        <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
+    </style>
+
+    <style name="directions_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/text_view_height</item>
+        <item name="android:textSize">@dimen/primaryText</item>
+        <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
     </style>
 
 </resources>
