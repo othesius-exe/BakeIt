@@ -1,6 +1,7 @@
 package com.example.caleb.bakeit.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,12 +39,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch(viewType) {
             case DIRECTIONS:
                 // Create a holder for Directions
-                View directionsHolder = inflater.inflate(R.layout.directions_layout, parent, false);
+                View directionsHolder = inflater.inflate(R.layout.directions_fragment, parent, false);
                 viewHolder = new DirectionsHolder(directionsHolder);
                 break;
             case INGREDIENTS:
                 // Create a holder for Ingredients
-                View ingredientsHolder = inflater.inflate(R.layout.ingredients_layout, parent, false);
+                View ingredientsHolder = inflater.inflate(R.layout.ingredients_fragment, parent, false);
                 viewHolder = new IngredientsHolder(ingredientsHolder);
                 break;
             case RECIPE:
@@ -54,15 +55,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         switch (holder.getItemViewType()) {
             case DIRECTIONS:
-                String title = "";
                 String content = "";
                 DirectionsHolder directionsHolder = (DirectionsHolder) holder;
                 RecipeDirections recipeDirections = (RecipeDirections) mObjects.get(position);
                 for (int d = 0; d < mObjects.size(); d++) {
-                    TextView titleView = ((DirectionsHolder) holder).getTitleView();
                     TextView stepView = ((DirectionsHolder) holder).getStepView();
                     TextView contentView = ((DirectionsHolder) holder).getDirectionView();
                     if (recipeDirections.getStepContent().equals("")) {
@@ -71,7 +70,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         content = recipeDirections.getStepContent();
                     }
                     stepView.setText(recipeDirections.getStepNumber());
-                    contentView.setText(recipeDirections.getStepContent());
+                    contentView.setText(content);
                     configureDirectionsHolder(directionsHolder, position);
                 }
                 break;
@@ -79,7 +78,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 IngredientsHolder ingredientsHolder = (IngredientsHolder) holder;
                 RecipeIngredients recipeIngredients = (RecipeIngredients) mObjects.get(position);
                 for (int i = 0; i < mObjects.size(); i++) {
-                    TextView titleView = ((IngredientsHolder) holder).getTitleView();
                     TextView ingredientView = ((IngredientsHolder) holder).getIngredientview();
                     TextView quantityView = ((IngredientsHolder) holder).getIngredientQuantityView();
                     TextView measurementView = ((IngredientsHolder) holder).getIngredientMeasurementView();
@@ -93,11 +91,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
             case RECIPE:
                 RecipeHolder recipeHolder = (RecipeHolder) holder;
-                Recipe recipe = (Recipe) mObjects.get(position);
+                final Recipe recipe = (Recipe) mObjects.get(position);
                 for (int j = 0; j < mObjects.size(); j++) {
                     TextView titleView = ((RecipeHolder) holder).getTitleTextView();
                     titleView.setText(recipe.getTitle());
                     configureRecipeHolder(recipeHolder, position);
+                    recipeHolder.getCardView().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, DirectionsActivity.class);
+                            intent.putExtra("recipe", recipe);
+                            mContext.startActivity(intent);
+                        }
+                    });
                 }
         }
     }

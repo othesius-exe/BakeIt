@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -92,9 +93,14 @@ public class MainActivity extends AppCompatActivity {
             mLoaderManager.initLoader(RECIPE_LOADER_ID, null, new RecipeCallback());
         }
 
+        mRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
         Log.i(LOG_TAG, "" + mRecyclerView.getChildCount());
         Log.i(LOG_TAG, "" + mRecipeCardAdapter.getItemCount());
-
     }
 
     private class RecipeCallback implements LoaderManager.LoaderCallbacks<ArrayList<Recipe>> {
