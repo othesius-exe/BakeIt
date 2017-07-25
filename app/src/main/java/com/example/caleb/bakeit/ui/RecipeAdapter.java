@@ -8,19 +8,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.caleb.bakeit.R;
+import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
 
 import java.util.ArrayList;
 
 /**
- * Adapter for RecipeDirections Recycler
+ * Adapter for Recipe, RecipeDirections and RecipeIngredients Recycler
  */
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<Object> mObjects;
-    private final int DIRECTIONS = 0, INGREDIENTS = 1;
+    private final int DIRECTIONS = 0, INGREDIENTS = 1, RECIPE = 2;
     private Context mContext;
 
     // Give the Adapter a context and a list of Objects
@@ -45,6 +46,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 View ingredientsHolder = inflater.inflate(R.layout.ingredients_layout, parent, false);
                 viewHolder = new IngredientsHolder(ingredientsHolder);
                 break;
+            case RECIPE:
+                View recipeHolder = inflater.inflate(R.layout.activity_main, parent, false);
+                viewHolder = new RecipeHolder(recipeHolder);
         }
         return viewHolder;
     }
@@ -85,6 +89,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     measurementView.setText(recipeIngredients.getMeasurement());
 
                     configureIngredientsHolder(ingredientsHolder, position);
+                }
+                break;
+            case RECIPE:
+                RecipeHolder recipeHolder = (RecipeHolder) holder;
+                Recipe recipe = (Recipe) mObjects.get(position);
+                for (int j = 0; j < mObjects.size(); j++) {
+                    TextView titleView = ((RecipeHolder) holder).getTitleTextView();
+                    titleView.setText(recipe.getTitle());
                 }
         }
     }

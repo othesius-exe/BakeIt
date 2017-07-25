@@ -14,7 +14,7 @@ import butterknife.BindView;
 
 public class DirectionsHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.recipe_title_view) TextView mTitleView;
+    @BindView(R.id.card_title_view) TextView mTitleView;
     @BindView(R.id.direction_long) TextView mDirectionView;
     @BindView(R.id.direction_step) TextView mStepView;
 
