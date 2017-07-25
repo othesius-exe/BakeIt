@@ -1,12 +1,11 @@
 package com.example.caleb.bakeit.ui;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -20,6 +19,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
     // Log Tag
@@ -43,18 +45,20 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     // Views to populate
-    private RecyclerView mRecyclerView;
-    private TextView mTitleTextView;
-    private CardView mCardView;
-
+    @Nullable
+    @BindView(R.id.card_recycler_view) RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView = (RecyclerView) findViewById(R.id.card_recycler);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        assert mRecyclerView != null;
+        try {
+            ButterKnife.bind(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Try to parse the JSON Asset to create Objects
         mRecipeObjectArrayList = new ArrayList<>();
@@ -123,9 +127,14 @@ public class MainActivity extends AppCompatActivity {
                     mRecipeArrayList.add(mRecipe);
                     mRecipeObjectArrayList.add(mRecipe);
 
+                    mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setHasFixedSize(true);
+
                     mRecipeCardAdapter = new RecipeAdapter(this, mRecipeObjectArrayList);
                     mRecyclerView.setAdapter(mRecipeCardAdapter);
 
+                    Log.i(LOG_TAG, "" + mRecyclerView.getChildCount());
                     Log.i(LOG_TAG, mRecipe.getTitle());
                     Log.i(LOG_TAG, "" + mRecipeCardAdapter.getItemCount());
                 }
