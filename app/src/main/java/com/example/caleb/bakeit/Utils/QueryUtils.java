@@ -148,47 +148,33 @@ public class QueryUtils {
         try {
             // Base JSON Response
             JSONArray jsonArray = new JSONArray(recipeJson);
-            for (int x = 0; x < jsonArray.length(); x++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(x);
-                // Iterate over the Base Response
-                for (int i = 0; i < jsonObject.length(); i++) {
-                    // Get the name of the Recipe
-                    name = jsonObject.getString("name");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject thisRecipe = jsonArray.getJSONObject(i);
+                name = thisRecipe.getString("name");
+                JSONArray ingredientsArray = thisRecipe.getJSONArray("ingredients");
+                for (int j = 0; j < ingredientsArray.length(); j++) {
+                    JSONObject thisIngredient = ingredientsArray.getJSONObject(j);
+                    quantity = thisIngredient.getInt("quantity");
+                    measurement = thisIngredient.getString("measure");
+                    ingredient = thisIngredient.getString("ingredient");
 
-                    // Get an Array of Ingredients, Measurement types and Measurements
-                    JSONArray ingredientArray = jsonObject.getJSONArray("ingredients");
-                    // Iterate over each Array and get the objects inside
-                    for (int j = 0; j < ingredientArray.length(); j++) {
-                        // For each ingredient Object, set the correct values
-                        JSONObject thisIngredient = ingredientArray.getJSONObject(j);
-                        quantity = thisIngredient.getInt("quantity");
-                        measurement = thisIngredient.getString("measure");
-                        ingredient = thisIngredient.getString("ingredient");
-
-                        // Create a new RecipeIngredients Object
-                        // Add that object to the Ingredients ArrayList
-                        RecipeIngredients recipeIngredients = new RecipeIngredients(ingredient, measurement, quantity);
-                        ingredientsArrayList.add(recipeIngredients);
-                    }
-                    // Get an Array of Directions
-                    JSONArray directionsArray = jsonObject.getJSONArray("steps");
-                    for (int s = 0; s < directionsArray.length(); s++) {
-                        // For each direction, set the values
-                        JSONObject thisDirection = directionsArray.getJSONObject(s);
-                        stepNumber = thisDirection.getInt("id");
-                        content = thisDirection.getString("description");
-                        if (thisDirection.has("videoURL")) {
-                            videoUrl = thisDirection.getString("videoURL");
-                        }
-                        RecipeDirections recipeDirections = new RecipeDirections(stepNumber, content, videoUrl);
-                        directionsArrayList.add(recipeDirections);
-                    }
-
-                    // Now, create a new complete RecipeObject
-                    Recipe recipe = new Recipe(name, directionsArrayList, ingredientsArrayList);
-                    recipeArrayList.add(recipe);
+                    RecipeIngredients ingredients = new RecipeIngredients(ingredient, measurement, quantity);
+                    ingredientsArrayList.add(ingredients);
                 }
+                JSONArray directionsArray = thisRecipe.getJSONArray("steps");
+                for (int x = 0; x < directionsArray.length(); x++) {
+                    JSONObject thisStep = directionsArray.getJSONObject(x);
+                    stepNumber = thisStep.getInt("id");
+                    content = thisStep.getString("description");
+                    videoUrl = thisStep.getString("videoURL");
+
+                    RecipeDirections directions = new RecipeDirections(stepNumber, content, videoUrl);
+                    directionsArrayList.add(directions);
+                }
+                Recipe recipe = new Recipe(name, directionsArrayList, ingredientsArrayList);
+                recipeArrayList.add(recipe);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(LOG_TAG, "Trouble parsing JSON.");
