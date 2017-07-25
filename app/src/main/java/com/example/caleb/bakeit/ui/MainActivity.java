@@ -1,7 +1,12 @@
 package com.example.caleb.bakeit.ui;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +16,8 @@ import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
+import com.example.caleb.bakeit.Utils.RecipeLoader;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -26,6 +26,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
     // Log Tag
     private String LOG_TAG = MainActivity.class.getSimpleName();
+
+    private static final String mRecipeUrl = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     // Objects Fetched from Json
     private Recipe mRecipe;
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     // Adapter for Cards
     private RecipeAdapter mRecipeCardAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    // Loader Variables
+    private LoaderManager mLoaderManager;
+    private int RECIPE_LOADER_ID = 0;
 
     // Views to populate
     @Nullable
@@ -68,97 +74,54 @@ public class MainActivity extends AppCompatActivity {
         mRecipeDirectionsArrayList = new ArrayList<>();
         mRecipeIngredientsArrayList = new ArrayList<>();
 
-        // Recipe variables
-        String name = "";
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
 
-        // Ingredients Variables
-        int quantity = 0;
-        String measurement = "";
-        String ingredient = "";
+        mRecipeCardAdapter = new RecipeAdapter(this, mRecipeObjectArrayList);
+        mRecyclerView.setAdapter(mRecipeCardAdapter);
 
-        // Directions Variables
-        int stepNumber = 0;
-        String content = "";
-        String videoUrl = "";
+        mLoaderManager = getSupportLoaderManager();
 
-        try {
-            // Base JSON Response
-            JSONArray jsonArray = new JSONArray((loadJSONFromAsset()));
-            for (int x = 0; x < jsonArray.length(); x++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(x);
-                // Iterate over the Base Response
-                for (int i = 0; i < jsonObject.length(); i++) {
-                    // Get the name of the Recipe
-                    name = jsonObject.getString("name");
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-                    // Get an Array of Ingredients, Measurement types and Measurements
-                    JSONArray ingredientArray = jsonObject.getJSONArray("ingredients");
-                    // Iterate over each Array and get the objects inside
-                    for (int j = 0; j < ingredientArray.length(); j++) {
-                        // For each ingredient Object, set the correct values
-                        JSONObject thisIngredient = ingredientArray.getJSONObject(j);
-                        quantity = thisIngredient.getInt("quantity");
-                        measurement = thisIngredient.getString("measure");
-                        ingredient = thisIngredient.getString("ingredient");
-
-                        // Create a new RecipeIngredients Object
-                        // Add that object to the Ingredients ArrayList
-                        mRecipeIngredients = new RecipeIngredients(ingredient, measurement, quantity);
-                        mIngredientsObjectArrayList.add(mRecipeIngredients);
-                        mRecipeIngredientsArrayList.add(mRecipeIngredients);
-                    }
-                    // Get an Array of Directions
-                    JSONArray directionsArray = jsonObject.getJSONArray("steps");
-                    for (int s = 0; s < directionsArray.length(); s++) {
-                        // For each direction, set the values
-                        JSONObject thisDirection = directionsArray.getJSONObject(s);
-                        stepNumber = thisDirection.getInt("id");
-                        content = thisDirection.getString("description");
-                        if (thisDirection.has("videoURL")) {
-                            videoUrl = thisDirection.getString("videoURL");
-                        }
-                        mRecipeDirections = new RecipeDirections(stepNumber, content, videoUrl);
-                        mDirectionsObjectArrayList.add(mRecipeDirections);
-                        mRecipeDirectionsArrayList.add(mRecipeDirections);
-                    }
-
-                    // Now, create a new complete RecipeObject
-                    mRecipe = new Recipe(name, mRecipeDirectionsArrayList, mRecipeIngredientsArrayList);
-                    mRecipeArrayList.add(mRecipe);
-                    mRecipeObjectArrayList.add(mRecipe);
-
-                    mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                    mRecyclerView.setLayoutManager(mLayoutManager);
-                    mRecyclerView.setHasFixedSize(true);
-
-                    mRecipeCardAdapter = new RecipeAdapter(this, mRecipeObjectArrayList);
-                    mRecyclerView.setAdapter(mRecipeCardAdapter);
-
-                    Log.i(LOG_TAG, "" + mRecyclerView.getChildCount());
-                    Log.i(LOG_TAG, mRecipe.getTitle());
-                    Log.i(LOG_TAG, "" + mRecipeCardAdapter.getItemCount());
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (isConnected) {
+            mLoaderManager.initLoader(RECIPE_LOADER_ID, null, new RecipeCallback());
         }
+
+        Log.i(LOG_TAG, "" + mRecyclerView.getChildCount());
+        Log.i(LOG_TAG, "" + mRecipeCardAdapter.getItemCount());
+
     }
 
-    // Load the JSON Asset
-    public String loadJSONFromAsset() {
-        String json = null;
+    private class RecipeCallback implements LoaderManager.LoaderCallbacks<ArrayList<Recipe>> {
 
-        try {
-            InputStream inputStream = getAssets().open("recipe.json");
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        @Override
+        public Loader<ArrayList<Recipe>> onCreateLoader(int id, Bundle args) {
+            Log.i(LOG_TAG, "Creating Loader");
+            return new RecipeLoader(MainActivity.this, mRecipeUrl);
         }
-        return json;
+
+        @Override
+        public void onLoadFinished(Loader<ArrayList<Recipe>> loader, ArrayList<Recipe> data) {
+            Log.i(LOG_TAG, "Load finished");
+            mRecipeArrayList.clear();
+            mRecipeObjectArrayList.clear();
+            mRecyclerView.setAdapter(mRecipeCardAdapter);
+            if (data != null && !data.isEmpty()) {
+                mRecipeArrayList.addAll(data);
+                mRecipeObjectArrayList.addAll(data);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<ArrayList<Recipe>> loader) {
+            mRecipeArrayList.clear();
+            mRecipeObjectArrayList.clear();
+            mLoaderManager.initLoader(RECIPE_LOADER_ID, null, this);
+        }
     }
 }
