@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.example.caleb.bakeit.R;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 public class DirectionsActivity extends FragmentActivity {
 
     @BindView(R.id.recipe_title) TextView mRecipeTitle;
+    @BindView(R.id.recipe_recycler) RecyclerView mRecyclerView;
 
     // ViewPagerAdapter
     private RecipeInfoPagerAdapter mRecipeInfoPagerAdapter;
@@ -91,7 +93,9 @@ public class DirectionsActivity extends FragmentActivity {
         mDirectionsAdapter = new RecipeAdapter(this, mDirectionsObjects);
         mIngredientsAdapter = new RecipeAdapter(this, mIngredientObjects);
 
-        mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mSupportFragmentManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mDirectionsAdapter);
 
+        mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mSupportFragmentManager);
     }
 }
