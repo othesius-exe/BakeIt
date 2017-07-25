@@ -8,24 +8,24 @@ public class RecipeDirections {
 
     // RecipeDirections Components
     // Instructions
-    private String mStepNumber;
+    private int mStepNumber;
 
     private String mStepContent;
 
     private String mVideoUrl;
 
-    public RecipeDirections(String stepNumber, String stepContent) {
+    public RecipeDirections(int stepNumber, String stepContent) {
         mStepContent = stepContent;
         mStepNumber = stepNumber;
     }
 
-    public RecipeDirections(String stepNumber, String stepContent, String videoUrl) {
+    public RecipeDirections(int stepNumber, String stepContent, String videoUrl) {
         mStepContent = stepContent;
         mStepNumber = stepNumber;
         mVideoUrl = videoUrl;
     }
 
-    public String getStepNumber() {
+    public int getStepNumber() {
         return mStepNumber;
     }
 

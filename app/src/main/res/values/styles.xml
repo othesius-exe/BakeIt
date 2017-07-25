@@ -16,6 +16,7 @@
         <item name="android:layout_marginTop">@dimen/card_top_bottom_margin</item>
         <item name="android:textSize">@dimen/primaryText</item>
         <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <!-- RecipeDirections Title Text Style within CardView -->
@@ -23,13 +24,14 @@
         <item name="android:layout_width">@dimen/card_title_width</item>
         <item name="android:layout_marginLeft">@dimen/text_view_right_left_margin</item>
         <item name="android:layout_marginRight">@dimen/text_view_right_left_margin</item>
+        <item name="android:layout_marginBottom">@dimen/text_view_top_bottom_margin</item>
         <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
         <item name="android:paddingRight">@dimen/text_view_right_left_padding</item>
-        <item name="android:layout_marginTop">@dimen/text_view_top_bottom_margin</item>
         <item name="android:textSize">@dimen/headerText</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:text">@string/recipe</item>
         <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">@color/accentText</item>
     </style>
 
     <style name="card_description_view_style">

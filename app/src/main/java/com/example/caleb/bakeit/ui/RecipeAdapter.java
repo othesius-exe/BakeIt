@@ -116,6 +116,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return -1;
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
     private void configureDirectionsHolder(DirectionsHolder holder, int position) {
         RecipeDirections directions = (RecipeDirections) mObjects.get(position);
         if (directions != null) {

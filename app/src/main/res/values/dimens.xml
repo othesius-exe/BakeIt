@@ -22,7 +22,7 @@
     <!-- Text Dimens -->
     <dimen name="primaryText">18sp</dimen>
     <dimen name="descriptionText">14sp</dimen>
-    <dimen name="headerText">26sp</dimen>
+    <dimen name="headerText">32sp</dimen>
 
     <!-- Title Strip Dimens -->
     <dimen name="title_strip_height">54dp</dimen>
