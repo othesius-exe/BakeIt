@@ -47,7 +47,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 viewHolder = new IngredientsHolder(ingredientsHolder);
                 break;
             case RECIPE:
-                View recipeHolder = inflater.inflate(R.layout.activity_main, parent, false);
+                View recipeHolder = inflater.inflate(R.layout.recipe_card_layout, parent, false);
                 viewHolder = new RecipeHolder(recipeHolder);
         }
         return viewHolder;
@@ -97,6 +97,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 for (int j = 0; j < mObjects.size(); j++) {
                     TextView titleView = ((RecipeHolder) holder).getTitleTextView();
                     titleView.setText(recipe.getTitle());
+                    configureRecipeHolder(recipeHolder, position);
                 }
         }
     }
@@ -112,6 +113,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return DIRECTIONS;
         } else if (mObjects.get(position) instanceof RecipeIngredients) {
             return INGREDIENTS;
+        } else if (mObjects.get(position) instanceof Recipe) {
+            return RECIPE;
         }
         return -1;
     }
@@ -135,6 +138,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             holder.getIngredientMeasurementView();
             holder.getIngredientQuantityView();
             holder.getIngredientQuantityView();
+        }
+    }
+
+    private void configureRecipeHolder(RecipeHolder holder, int position) {
+        Recipe recipe = (Recipe) mObjects.get(position);
+        if (recipe != null) {
+            holder.getTitleTextView();
+            holder.getCardView();
         }
     }
 }
