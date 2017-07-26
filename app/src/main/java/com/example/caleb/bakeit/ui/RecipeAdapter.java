@@ -2,6 +2,7 @@ package com.example.caleb.bakeit.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private ArrayList<Object> mObjects;
     private final int DIRECTIONS = 0, INGREDIENTS = 1, RECIPE = 2;
     private Context mContext;
+    private Bundle mBundle;
 
     // Give the Adapter a context and a list of Objects
     public RecipeAdapter(Context context, ArrayList<Object> objects) {
@@ -91,6 +93,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
             case RECIPE:
                 RecipeHolder recipeHolder = (RecipeHolder) holder;
+                mBundle = new Bundle();
                 final Recipe recipe = (Recipe) mObjects.get(position);
                 for (int j = 0; j < mObjects.size(); j++) {
                     TextView titleView = ((RecipeHolder) holder).getTitleTextView();
@@ -99,9 +102,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     recipeHolder.getCardView().setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(mContext, DirectionsActivity.class);
-                            intent.putExtra("recipe", recipe);
-                            mContext.startActivity(intent);
+                            Intent directionsIntent = new Intent(mContext, DirectionsActivity.class);
+
+                            mBundle.putParcelable("recipe", recipe);
+                            directionsIntent.putExtras(mBundle);
+                            mContext.startActivity(directionsIntent);
                         }
                     });
                 }

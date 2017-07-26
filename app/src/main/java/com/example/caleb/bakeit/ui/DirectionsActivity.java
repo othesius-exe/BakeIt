@@ -68,12 +68,13 @@ public class DirectionsActivity extends FragmentActivity {
         if (savedInstanceState == null) {
             DirectionsFragment directionsFragment = new DirectionsFragment();
 
-            directionsFragment.setArguments(intent.getExtras());
+            directionsFragment.setArguments(mBundle);
             mSupportFragmentManager.beginTransaction()
                     .add(R.id.view_pager, directionsFragment)
                     .commit();
 
             IngredientFragment ingredientFragment = new IngredientFragment();
+            ingredientFragment.setArguments(mBundle);
             mSupportFragmentManager.beginTransaction()
                     .add(R.id.view_pager, ingredientFragment)
                     .commit();
