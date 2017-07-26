@@ -103,7 +103,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View v) {
                             Intent directionsIntent = new Intent(mContext, DirectionsActivity.class);
-
                             mBundle.putParcelable("recipe", recipe);
                             directionsIntent.putExtras(mBundle);
                             mContext.startActivity(directionsIntent);

@@ -15,6 +15,9 @@ import com.example.caleb.bakeit.RecipeIngredients;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  *
  */
@@ -26,7 +29,7 @@ public class DirectionsFragment extends Fragment {
     private ArrayList<RecipeIngredients> mRecipeDirectionsArray;
     private ArrayList<Object> mDirectionsObjectsArray;
     private Bundle mBundle;
-    private RecyclerView mDirectionRecycler;
+    @BindView(R.id.directions_recycler) RecyclerView mDirectionRecycler;
 
     // Log Tag
     private static final String LOG_TAG = DirectionsFragment.class.getSimpleName();
@@ -51,7 +54,7 @@ public class DirectionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.directions_fragment, container, false);
 
-        mDirectionRecycler = (RecyclerView) view.findViewById(R.id.directions_recycler);
+        ButterKnife.bind(getContext(), mDirectionRecycler);
 
         mBundle = getArguments();
         mDirectionsObjectsArray = new ArrayList<>();
@@ -59,7 +62,8 @@ public class DirectionsFragment extends Fragment {
         mDirectionsObjectsArray = new ArrayList<>();
         mDirectionsObjectsArray.add(getLoaderManager());
         mDirectionsAdapter = new RecipeAdapter(getContext(), mDirectionsObjectsArray);
-        mDirectionRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mDirectionRecycler.setLayoutManager(mLayoutManager);
         mDirectionRecycler.setAdapter(mDirectionsAdapter);
         return view;
     }
