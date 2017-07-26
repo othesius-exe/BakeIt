@@ -27,7 +27,7 @@ public class IngredientsHolder extends RecyclerView.ViewHolder {
         return mTitleView;
     }
 
-    public TextView getIngredientview() {
+    public TextView getIngredientView() {
         return mIngredientNameView;
     }
 

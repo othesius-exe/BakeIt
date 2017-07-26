@@ -54,8 +54,7 @@ public class IngredientFragment extends Fragment {
         mBundle = getArguments();
         mRecipeIngredientsArray = new ArrayList<>();
         mRecipeIngredientsArray = mBundle.getParcelableArrayList("ingredients");
-        mIngredientObjectsArray = new ArrayList<>();
-        mIngredientObjectsArray.add(getLoaderManager());
+        mIngredientObjectsArray = new ArrayList<Object>(mRecipeIngredientsArray);
         mIngredientsAdapter = new RecipeAdapter(getContext(), mIngredientObjectsArray);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mIngredientRecycler.setLayoutManager(mLayoutManager);

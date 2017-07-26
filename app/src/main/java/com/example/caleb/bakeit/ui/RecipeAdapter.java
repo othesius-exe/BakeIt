@@ -80,7 +80,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 IngredientsHolder ingredientsHolder = (IngredientsHolder) holder;
                 RecipeIngredients recipeIngredients = (RecipeIngredients) mObjects.get(position);
                 for (int i = 0; i < mObjects.size(); i++) {
-                    TextView ingredientView = ((IngredientsHolder) holder).getIngredientview();
+                    TextView ingredientView = ((IngredientsHolder) holder).getIngredientView();
                     TextView quantityView = ((IngredientsHolder) holder).getIngredientQuantityView();
                     TextView measurementView = ((IngredientsHolder) holder).getIngredientMeasurementView();
 

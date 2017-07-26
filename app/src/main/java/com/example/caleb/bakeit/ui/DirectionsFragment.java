@@ -59,8 +59,7 @@ public class DirectionsFragment extends Fragment {
         mBundle = getArguments();
         mDirectionsObjectsArray = new ArrayList<>();
         mRecipeDirectionsArray = mBundle.getParcelableArrayList("directions");
-        mDirectionsObjectsArray = new ArrayList<>();
-        mDirectionsObjectsArray.add(getLoaderManager());
+        mDirectionsObjectsArray = new ArrayList<Object>(mRecipeDirectionsArray);
         mDirectionsAdapter = new RecipeAdapter(getContext(), mDirectionsObjectsArray);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mDirectionRecycler.setLayoutManager(mLayoutManager);
