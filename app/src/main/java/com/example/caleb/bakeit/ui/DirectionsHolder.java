@@ -21,6 +21,7 @@ public class DirectionsHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.card_title_view) TextView mTitleView;
     @BindView(R.id.direction_long) TextView mDirectionView;
     @BindView(R.id.description_short) TextView mStepView;
+    @BindView(R.id.divider) TextView mDivider;
 
     // Constructor for the Holder
     public DirectionsHolder(View view) {

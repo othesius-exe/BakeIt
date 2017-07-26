@@ -50,6 +50,11 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public CharSequence getPageTitle(int position) {
+        return super.getPageTitle(position);
+    }
+    
+    @Override
     public int getCount() {
         return 2;
     }

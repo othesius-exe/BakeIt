@@ -70,6 +70,7 @@
     <style name="text_view_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/text_view_height</item>
+        <item name="android:layout_marginBottom">@dimen/text_view_top_bottom_margin</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/primaryText</item>
         <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
@@ -77,6 +78,7 @@
 
     <style name="directions_view_style">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/text_view_top_bottom_margin</item>
         <item name="android:layout_height">@dimen/text_view_height</item>
         <item name="android:textSize">@dimen/primaryText</item>
         <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>

@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -33,13 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Objects Fetched from Json
     private Recipe mRecipe;
-    private RecipeDirections mRecipeDirections;
-    private RecipeIngredients mRecipeIngredients;
 
     // ArrayLists of each object type to be passed to RecyclerView.Adapter
     private ArrayList<Object> mRecipeObjectArrayList;
-    private ArrayList<Object> mDirectionsObjectArrayList;
-    private ArrayList<Object> mIngredientsObjectArrayList;
     private ArrayList<Recipe> mRecipeArrayList;
     private ArrayList<RecipeDirections> mRecipeDirectionsArrayList;
     private ArrayList<RecipeIngredients> mRecipeIngredientsArrayList;
@@ -72,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Try to parse the JSON Asset to create Objects
         mRecipeObjectArrayList = new ArrayList<>();
-        mDirectionsObjectArrayList = new ArrayList<>();
-        mIngredientsObjectArrayList = new ArrayList<>();
         mRecipeArrayList = new ArrayList<>();
         mRecipeDirectionsArrayList = new ArrayList<>();
         mRecipeIngredientsArrayList = new ArrayList<>();
@@ -95,16 +88,6 @@ public class MainActivity extends AppCompatActivity {
         if (isConnected) {
             mLoaderManager.initLoader(RECIPE_LOADER_ID, null, new RecipeCallback());
         }
-
-        mRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        Log.i(LOG_TAG, "" + mRecyclerView.getChildCount());
-        Log.i(LOG_TAG, "" + mRecipeCardAdapter.getItemCount());
     }
 
     private class RecipeCallback implements LoaderManager.LoaderCallbacks<ArrayList<Recipe>> {

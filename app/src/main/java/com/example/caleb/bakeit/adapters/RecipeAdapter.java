@@ -85,16 +85,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 IngredientsHolder ingredientsHolder = (IngredientsHolder) holder;
                 RecipeIngredients recipeIngredients = (RecipeIngredients) mObjects.get(position);
                 for (int i = 0; i < mObjects.size(); i++) {
-                    TextView ingredientView = ((IngredientsHolder) holder).getIngredientView();
-                    TextView quantityView = ((IngredientsHolder) holder).getIngredientQuantityView();
-                    TextView measurementView = ((IngredientsHolder) holder).getIngredientMeasurementView();
+                    if (mObjects.get(i) instanceof RecipeIngredients) {
+                        double quantity = recipeIngredients.getQuantity();
+                        String ingredient = recipeIngredients.getIngredient();
+                        String measurement = recipeIngredients.getMeasurement();
 
-                    ingredientView.setText(recipeIngredients.getIngredient());
-                    //quantityView.setText(recipeIngredients.getQuantity());
-                    measurementView.setText(recipeIngredients.getMeasurement());
+                        TextView ingredientView = ((IngredientsHolder) holder).getIngredientView();
+                        TextView quantityView = ((IngredientsHolder) holder).getIngredientQuantityView();
 
-                    configureIngredientsHolder(ingredientsHolder, position);
+                        ingredientView.setText(ingredient);
+                        quantityView.setText(String.valueOf(quantity));
+                        quantityView.append(" " + measurement);
+
+                        configureIngredientsHolder(ingredientsHolder, position);
+                    }
                 }
+
                 break;
             case RECIPE:
                 RecipeHolder recipeHolder = (RecipeHolder) holder;
@@ -151,7 +157,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private void configureIngredientsHolder(IngredientsHolder holder, int position) {
         RecipeIngredients ingredients = (RecipeIngredients) mObjects.get(position);
         if (ingredients != null) {
-            holder.getIngredientMeasurementView();
             holder.getIngredientQuantityView();
             holder.getIngredientView();
         }

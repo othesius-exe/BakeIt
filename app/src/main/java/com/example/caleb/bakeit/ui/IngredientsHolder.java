@@ -19,7 +19,6 @@ public class IngredientsHolder extends RecyclerView.ViewHolder {
     @Nullable
     @BindView(R.id.recipe_title) TextView mTitleView;
     @BindView(R.id.ingredient_name) TextView mIngredientNameView;
-    @BindView(R.id.ingredient_measurement) TextView mIngredientMeasurementView;
     @BindView(R.id.ingredient_quantity) TextView mIngredientQuantityView;
 
     public IngredientsHolder(View view) {
@@ -36,10 +35,6 @@ public class IngredientsHolder extends RecyclerView.ViewHolder {
         return mIngredientNameView;
     }
 
-    public TextView getIngredientMeasurementView() {
-        return mIngredientMeasurementView;
-    }
-
     public TextView getIngredientQuantityView() {
         return mIngredientQuantityView;
     }
@@ -50,10 +45,6 @@ public class IngredientsHolder extends RecyclerView.ViewHolder {
 
     public void setIngredientNameView(TextView nameView) {
         mIngredientNameView = nameView;
-    }
-
-    public void setIngredientMeasurementView(TextView measurementView) {
-        mIngredientMeasurementView = measurementView;
     }
 
     public void setIngredientQuantityView(TextView quantityView) {

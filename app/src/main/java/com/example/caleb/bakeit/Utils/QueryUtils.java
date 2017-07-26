@@ -128,7 +128,7 @@ public class QueryUtils {
         String name = "";
 
         // Ingredients Variables
-        int quantity = 0;
+        double quantity = 0.0;
         String measurement = "";
         String ingredient = "";
 
@@ -157,7 +157,7 @@ public class QueryUtils {
                 JSONArray ingredientsArray = thisRecipe.getJSONArray("ingredients");
                 for (int j = 0; j < ingredientsArray.length(); j++) {
                     JSONObject thisIngredient = ingredientsArray.getJSONObject(j);
-                    quantity = thisIngredient.getInt("quantity");
+                    quantity = thisIngredient.getDouble("quantity");
                     measurement = thisIngredient.getString("measure");
                     ingredient = thisIngredient.getString("ingredient");
 

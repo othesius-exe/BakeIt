@@ -11,10 +11,10 @@ import android.os.Parcelable;
 public class RecipeIngredients implements Parcelable {
 
     private String mIngredient;
-    private int mQuantity;
+    private double mQuantity;
     private String mMeasurement;
 
-    public RecipeIngredients(String ingredient, String measurement, int quantity) {
+    public RecipeIngredients(String ingredient, String measurement, double quantity) {
         mIngredient = ingredient;
         mMeasurement = measurement;
         mQuantity = quantity;
@@ -28,13 +28,13 @@ public class RecipeIngredients implements Parcelable {
         return mMeasurement;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return mQuantity;
     }
 
     protected RecipeIngredients(Parcel in) {
         mIngredient = in.readString();
-        mQuantity = in.readInt();
+        mQuantity = in.readDouble();
         mMeasurement = in.readString();
     }
 
@@ -46,7 +46,7 @@ public class RecipeIngredients implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mIngredient);
-        dest.writeInt(mQuantity);
+        dest.writeDouble(mQuantity);
         dest.writeString(mMeasurement);
     }
 
