@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.example.caleb.bakeit.R;
@@ -26,7 +25,6 @@ import butterknife.ButterKnife;
 public class DirectionsActivity extends FragmentActivity {
 
     @BindView(R.id.recipe_title) TextView mRecipeTitle;
-    @BindView(R.id.recipe_recycler) RecyclerView mRecyclerView;
 
     // ViewPagerAdapter
     private RecipeInfoPagerAdapter mRecipeInfoPagerAdapter;
@@ -43,6 +41,8 @@ public class DirectionsActivity extends FragmentActivity {
     private RecipeAdapter mDirectionsAdapter;
     private RecipeAdapter mIngredientsAdapter;
     private LinearLayoutManager mLayoutManager;
+
+    private Bundle mBundle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +75,13 @@ public class DirectionsActivity extends FragmentActivity {
             mSupportFragmentManager.beginTransaction()
                     .add(R.id.directions_ingredients_container, directionsFragment)
                     .commit();
+
+            IngredientFragment ingredientFragment = new IngredientFragment();
+            mSupportFragmentManager.beginTransaction()
+                    .add(R.id.directions_ingredients_container, ingredientFragment)
+                    .commit();
         }
+
 
         // Prepare our LayoutManager
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -92,9 +98,6 @@ public class DirectionsActivity extends FragmentActivity {
         // Set up our Adapter, passing in the objects Lists
         mDirectionsAdapter = new RecipeAdapter(this, mDirectionsObjects);
         mIngredientsAdapter = new RecipeAdapter(this, mIngredientObjects);
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mDirectionsAdapter);
 
         mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mSupportFragmentManager);
     }
