@@ -63,7 +63,9 @@ public class DirectionsActivity extends FragmentActivity {
         }
 
         mBundle.putParcelableArrayList("directions", mRecipeDirectionsArrayList);
+        mBundle.putString("title", "Directions");
         mBundle.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
+        mBundle.putString("title", "Ingredients");
 
         // Check for a savedInstance
         // Otherwise create a new instance
@@ -84,6 +86,6 @@ public class DirectionsActivity extends FragmentActivity {
 
         mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
         mViewPager.setAdapter(mRecipeInfoPagerAdapter);
-
+        mViewPager.setOffscreenPageLimit(1);
     }
 }

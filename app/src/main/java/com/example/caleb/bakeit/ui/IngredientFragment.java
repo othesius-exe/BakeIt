@@ -28,6 +28,7 @@ public class IngredientFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private ArrayList<RecipeIngredients> mRecipeIngredientsArray;
     private ArrayList<Object> mIngredientObjectsArray;
+    private String mTitle;
     private Bundle mBundle;
     @BindView(R.id.ingredients_recycler) RecyclerView mIngredientRecycler;
 
@@ -43,6 +44,7 @@ public class IngredientFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mTitle = getArguments().getString("title");
     }
 
     @Nullable

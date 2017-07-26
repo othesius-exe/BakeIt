@@ -25,6 +25,8 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
     private Bundle mBundle;
     private ArrayList<RecipeDirections> mDirections;
     private ArrayList<RecipeIngredients> mIngredients;
+    private static int FRAGMENTS = 2;
+    private String mTitle;
 
 
     public RecipeInfoPagerAdapter(Context context, Bundle bundle, FragmentManager fragmentManager) {
@@ -33,6 +35,7 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
         mBundle = bundle;
         mDirections = mBundle.getParcelableArrayList("directions");
         mIngredients = mBundle.getParcelableArrayList("ingredients");
+        mTitle = mBundle.getString("title");
 
     }
 
@@ -45,17 +48,23 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return DirectionsFragment.newInstance(mDirectionsFragmentName, mDirections);
             default:
-                return IngredientFragment.newInstance(mIngredientsFragmentName, mIngredients);
+                return null;
         }
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return super.getPageTitle(position);
+        if (position == 0) {
+            return "Ingredients";
+        } else if (position == 1) {
+            return "Directions";
+        }
+        return null;
+
     }
-    
+
     @Override
     public int getCount() {
-        return 2;
+        return FRAGMENTS;
     }
 }
