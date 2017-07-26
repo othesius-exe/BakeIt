@@ -11,11 +11,9 @@ import android.view.ViewGroup;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.RecipeDirections;
+import com.example.caleb.bakeit.RecipeIngredients;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  *
@@ -24,10 +22,11 @@ import butterknife.ButterKnife;
 public class DirectionsFragment extends Fragment {
 
     private RecipeAdapter mDirectionsAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
-    private ArrayList<Object> mDirectionsObject;
-    private ArrayList<RecipeDirections> mDirections;
-    @BindView(R.id.recipe_recycler) RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private ArrayList<RecipeIngredients> mRecipeDirectionsArray;
+    private ArrayList<Object> mDirectionsObjectsArray;
+    private Bundle mBundle;
+    private RecyclerView mDirectionRecycler;
 
     // Log Tag
     private static final String LOG_TAG = DirectionsFragment.class.getSimpleName();
@@ -45,8 +44,6 @@ public class DirectionsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDirections = getArguments().getParcelableArrayList("directions");
-        String title = getArguments().getString("title");
     }
 
     @Nullable
@@ -54,10 +51,16 @@ public class DirectionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.directions_fragment, container, false);
 
-        ButterKnife.bind(this, mRecyclerView);
-        mDirectionsAdapter = new RecipeAdapter(getContext(), mDirectionsObject);
-        mRecyclerView.setAdapter(mDirectionsAdapter);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mDirectionRecycler = (RecyclerView) view.findViewById(R.id.directions_recycler);
+
+        mBundle = getArguments();
+        mDirectionsObjectsArray = new ArrayList<>();
+        mRecipeDirectionsArray = mBundle.getParcelableArrayList("directions");
+        mDirectionsObjectsArray = new ArrayList<>();
+        mDirectionsObjectsArray.add(getLoaderManager());
+        mDirectionsAdapter = new RecipeAdapter(getContext(), mDirectionsObjectsArray);
+        mDirectionRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mDirectionRecycler.setAdapter(mDirectionsAdapter);
         return view;
     }
 }

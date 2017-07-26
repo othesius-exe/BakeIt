@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -15,6 +14,7 @@ import com.example.caleb.bakeit.RecipeIngredients;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -31,17 +31,15 @@ public class DirectionsActivity extends FragmentActivity {
     // FragmentManager
     private FragmentManager mSupportFragmentManager;
 
-    private ArrayList<RecipeDirections> mRecipeDirections;
-    private ArrayList<RecipeIngredients> mRecipeIngredients;
-    private ArrayList<Object> mDirectionsObjects;
-    private ArrayList<Object> mIngredientObjects;
+    // Objects
     private Recipe mRecipe;
+    private ArrayList<RecipeDirections> mRecipeDirectionsArrayList;
+    private ArrayList<RecipeIngredients> mRecipeIngredientsArrayList;
 
-    private RecipeAdapter mDirectionsAdapter;
-    private RecipeAdapter mIngredientsAdapter;
-    private LinearLayoutManager mLayoutManager;
-
+    // Bundles
     private Bundle mBundle;
+
+    @BindView(R.id.view_pager) ViewPager mViewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,9 +57,12 @@ public class DirectionsActivity extends FragmentActivity {
         if (mRecipe != null) {
             // Get the name of the recipe, so we can populate the title page
             // Draw the ArrayLists of Directions and Ingredients out
-            mRecipeDirections = mRecipe.getDirections();
-            mRecipeIngredients = mRecipe.getIngredients();
+            mRecipeDirectionsArrayList = mRecipe.getDirections();
+            mRecipeIngredientsArrayList = mRecipe.getIngredients();
         }
+
+        mBundle.putParcelableArrayList("directions", mRecipeDirectionsArrayList);
+        mBundle.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
 
         // Check for a savedInstance
         // Otherwise create a new instance
@@ -80,26 +81,8 @@ public class DirectionsActivity extends FragmentActivity {
                     .commit();
         }
 
-
-        // Prepare our LayoutManager
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-        // The Adapter accepts a list of generic objects
-        // Instantiate New object lists
-        mDirectionsObjects = new ArrayList<>();
-        mIngredientObjects = new ArrayList<>();
-
-        // Add the ArrayLists to the Object ArrayLists
-        mDirectionsObjects.add(mRecipeDirections);
-        mIngredientObjects.add(mRecipeIngredients);
-
-        // Set up our Adapter, passing in the objects Lists
-        mDirectionsAdapter = new RecipeAdapter(this, mDirectionsObjects);
-        mIngredientsAdapter = new RecipeAdapter(this, mIngredientObjects);
-
-        mBundle.putParcelableArrayList("ingredients", mRecipeIngredients);
-        mBundle.putParcelableArrayList("directions", mRecipeDirections);
         mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
-        Log.i(LOG_TAG, "Bundle: " + mBundle.toString());
+        mViewPager.setAdapter(mRecipeInfoPagerAdapter);
+
     }
 }

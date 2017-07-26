@@ -3,6 +3,8 @@ package com.example.caleb.bakeit.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +20,12 @@ import java.util.ArrayList;
 
 public class IngredientFragment extends Fragment {
 
-    // Log Tag
-    private static final String LOG_TAG = IngredientFragment.class.getSimpleName();
-
-    // List Index
-    private static final String LIST_INDEX = "list_index";
-
-    // List Index Int
-    private int mListIndex;
-
-    // RecyclerView for Directions List
+    private RecipeAdapter mIngredientsAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private ArrayList<RecipeIngredients> mRecipeIngredientsArray;
+    private ArrayList<Object> mIngredientObjectsArray;
+    private Bundle mBundle;
+    private RecyclerView mIngredientRecycler;
 
     public static IngredientFragment newInstance(String title, ArrayList<RecipeIngredients> ingredients) {
         IngredientFragment ingredientFragment = new IngredientFragment();
@@ -38,19 +36,26 @@ public class IngredientFragment extends Fragment {
         return ingredientFragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.ingredients_fragment, container, false);
 
+        mIngredientRecycler = (RecyclerView) v.findViewById(R.id.ingredients_recycler);
+        mBundle = getArguments();
+        mRecipeIngredientsArray = new ArrayList<>();
+        mRecipeIngredientsArray = mBundle.getParcelableArrayList("ingredients");
+        mIngredientObjectsArray = new ArrayList<>();
+        mIngredientObjectsArray.add(getLoaderManager());
+        mIngredientsAdapter = new RecipeAdapter(getContext(), mIngredientObjectsArray);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mIngredientRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mIngredientRecycler.setAdapter(mIngredientsAdapter);
         return v;
-    }
-
-    public static IngredientFragment newInstance(String text) {
-        IngredientFragment ingredientFragment = new IngredientFragment();
-        Bundle bundle = new Bundle();
-        ingredientFragment.setArguments(bundle);
-
-        return ingredientFragment;
     }
 }
