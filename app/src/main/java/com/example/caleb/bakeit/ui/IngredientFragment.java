@@ -49,7 +49,7 @@ public class IngredientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.ingredients_fragment, container, false);
 
-        ButterKnife.bind(getContext(), mIngredientRecycler);
+        ButterKnife.bind(this, v);
 
         mBundle = getArguments();
         mRecipeIngredientsArray = new ArrayList<>();

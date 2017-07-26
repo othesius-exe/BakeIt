@@ -41,12 +41,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch(viewType) {
             case DIRECTIONS:
                 // Create a holder for Directions
-                View directionsHolder = inflater.inflate(R.layout.directions_fragment, parent, false);
+                View directionsHolder = inflater.inflate(R.layout.directions_layout, parent, false);
                 viewHolder = new DirectionsHolder(directionsHolder);
                 break;
             case INGREDIENTS:
                 // Create a holder for Ingredients
-                View ingredientsHolder = inflater.inflate(R.layout.ingredients_fragment, parent, false);
+                View ingredientsHolder = inflater.inflate(R.layout.ingredients_layout, parent, false);
                 viewHolder = new IngredientsHolder(ingredientsHolder);
                 break;
             case RECIPE:
@@ -147,7 +147,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (ingredients != null) {
             holder.getIngredientMeasurementView();
             holder.getIngredientQuantityView();
-            holder.getIngredientQuantityView();
+            holder.getIngredientview();
         }
     }
 
