@@ -147,7 +147,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (ingredients != null) {
             holder.getIngredientMeasurementView();
             holder.getIngredientQuantityView();
-            holder.getIngredientview();
+            holder.getIngredientView();
         }
     }
 

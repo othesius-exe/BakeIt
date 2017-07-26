@@ -1,5 +1,6 @@
 package com.example.caleb.bakeit.ui;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -7,13 +8,14 @@ import android.widget.TextView;
 import com.example.caleb.bakeit.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * ViewHolder for Ingredients list
  */
 
 public class IngredientsHolder extends RecyclerView.ViewHolder {
-
+    @Nullable
     @BindView(R.id.recipe_title) TextView mTitleView;
     @BindView(R.id.ingredient_name) TextView mIngredientNameView;
     @BindView(R.id.ingredient_measurement) TextView mIngredientMeasurementView;
@@ -21,6 +23,8 @@ public class IngredientsHolder extends RecyclerView.ViewHolder {
 
     IngredientsHolder(View view) {
         super(view);
+
+        ButterKnife.bind(this, view);
     }
 
     public TextView getTitleView() {
