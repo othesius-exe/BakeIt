@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.TextView;
+import android.util.Log;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -15,7 +15,6 @@ import com.example.caleb.bakeit.RecipeIngredients;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class DirectionsActivity extends FragmentActivity {
 
-    @BindView(R.id.recipe_title) TextView mRecipeTitle;
+    private String LOG_TAG = DirectionsActivity.class.getSimpleName();
 
     // ViewPagerAdapter
     private RecipeInfoPagerAdapter mRecipeInfoPagerAdapter;
@@ -50,7 +49,7 @@ public class DirectionsActivity extends FragmentActivity {
         setContentView(R.layout.activity_directions);
         ButterKnife.bind(this);
         mSupportFragmentManager = getSupportFragmentManager();
-
+        mBundle = new Bundle();
 
         // Get the starting intent
         Intent intent = getIntent();
@@ -59,8 +58,6 @@ public class DirectionsActivity extends FragmentActivity {
 
         if (mRecipe != null) {
             // Get the name of the recipe, so we can populate the title page
-            String name = mRecipe.getTitle();
-            mRecipeTitle.setText(name);
             // Draw the ArrayLists of Directions and Ingredients out
             mRecipeDirections = mRecipe.getDirections();
             mRecipeIngredients = mRecipe.getIngredients();
@@ -73,12 +70,12 @@ public class DirectionsActivity extends FragmentActivity {
 
             directionsFragment.setArguments(intent.getExtras());
             mSupportFragmentManager.beginTransaction()
-                    .add(R.id.directions_ingredients_container, directionsFragment)
+                    .add(R.id.view_pager, directionsFragment)
                     .commit();
 
             IngredientFragment ingredientFragment = new IngredientFragment();
             mSupportFragmentManager.beginTransaction()
-                    .add(R.id.directions_ingredients_container, ingredientFragment)
+                    .add(R.id.view_pager, ingredientFragment)
                     .commit();
         }
 
@@ -99,6 +96,9 @@ public class DirectionsActivity extends FragmentActivity {
         mDirectionsAdapter = new RecipeAdapter(this, mDirectionsObjects);
         mIngredientsAdapter = new RecipeAdapter(this, mIngredientObjects);
 
-        mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mSupportFragmentManager);
+        mBundle.putParcelableArrayList("ingredients", mRecipeIngredients);
+        mBundle.putParcelableArrayList("directions", mRecipeDirections);
+        mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
+        Log.i(LOG_TAG, "Bundle: " + mBundle.toString());
     }
 }

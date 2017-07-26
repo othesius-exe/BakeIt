@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.caleb.bakeit.R;
+import com.example.caleb.bakeit.RecipeIngredients;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -26,7 +29,14 @@ public class IngredientFragment extends Fragment {
 
     // RecyclerView for Directions List
 
-    public IngredientFragment() {}
+    public static IngredientFragment newInstance(String title, ArrayList<RecipeIngredients> ingredients) {
+        IngredientFragment ingredientFragment = new IngredientFragment();
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("ingredients", ingredients);
+        args.putString("title", title);
+        ingredientFragment.setArguments(args);
+        return ingredientFragment;
+    }
 
     @Nullable
     @Override

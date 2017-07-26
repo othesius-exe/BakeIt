@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Recipe> mRecipeArrayList;
     private ArrayList<RecipeDirections> mRecipeDirectionsArrayList;
     private ArrayList<RecipeIngredients> mRecipeIngredientsArrayList;
+    private Bundle mBundle;
 
     // Adapter for Cards
     private RecipeAdapter mRecipeCardAdapter;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mBundle = new Bundle();
 
         assert mRecyclerView != null;
         try {
@@ -120,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
             if (data != null && !data.isEmpty()) {
                 mRecipeArrayList.addAll(data);
                 mRecipeObjectArrayList.addAll(data);
+                mBundle.putParcelableArrayList("directions", mRecipeDirectionsArrayList);
+                mBundle.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
             }
         }
 
