@@ -1,4 +1,4 @@
-package com.example.caleb.bakeit.ui;
+package com.example.caleb.bakeit.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
+import com.example.caleb.bakeit.ui.DirectionsFragment;
+import com.example.caleb.bakeit.ui.IngredientFragment;
 
 import java.util.ArrayList;
 

@@ -11,6 +11,7 @@ import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
+import com.example.caleb.bakeit.adapters.RecipeInfoPagerAdapter;
 
 import java.util.ArrayList;
 

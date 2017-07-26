@@ -136,19 +136,22 @@ public class QueryUtils {
         int stepNumber = 0;
         String content = "";
         String videoUrl = "";
+        String stepDescription = "";
 
         if (TextUtils.isEmpty(recipeJson)) {
             return null;
         }
 
         ArrayList<Recipe> recipeArrayList = new ArrayList<>();
-        ArrayList<RecipeDirections> directionsArrayList = new ArrayList<>();
-        ArrayList<RecipeIngredients> ingredientsArrayList = new ArrayList<>();
 
         try {
             // Base JSON Response
             JSONArray jsonArray = new JSONArray(recipeJson);
             for (int i = 0; i < jsonArray.length(); i++) {
+
+                ArrayList<RecipeDirections> directionsArrayList = new ArrayList<>();
+                ArrayList<RecipeIngredients> ingredientsArrayList = new ArrayList<>();
+
                 JSONObject thisRecipe = jsonArray.getJSONObject(i);
                 name = thisRecipe.getString("name");
                 JSONArray ingredientsArray = thisRecipe.getJSONArray("ingredients");
@@ -158,19 +161,22 @@ public class QueryUtils {
                     measurement = thisIngredient.getString("measure");
                     ingredient = thisIngredient.getString("ingredient");
 
-                    RecipeIngredients ingredients = new RecipeIngredients(ingredient, measurement, quantity);
-                    ingredientsArrayList.add(ingredients);
+                    RecipeIngredients mIngredients = new RecipeIngredients(ingredient, measurement, quantity);
+                    ingredientsArrayList.add(mIngredients);
                 }
+
                 JSONArray directionsArray = thisRecipe.getJSONArray("steps");
                 for (int x = 0; x < directionsArray.length(); x++) {
                     JSONObject thisStep = directionsArray.getJSONObject(x);
                     stepNumber = thisStep.getInt("id");
                     content = thisStep.getString("description");
                     videoUrl = thisStep.getString("videoURL");
+                    stepDescription = thisStep.getString("shortDescription");
 
-                    RecipeDirections directions = new RecipeDirections(stepNumber, content, videoUrl);
-                    directionsArrayList.add(directions);
+                    RecipeDirections mDirections = new RecipeDirections(stepNumber, stepDescription, content, videoUrl);
+                    directionsArrayList.add(mDirections);
                 }
+
                 Recipe recipe = new Recipe(name, directionsArrayList, ingredientsArrayList);
                 recipeArrayList.add(recipe);
             }

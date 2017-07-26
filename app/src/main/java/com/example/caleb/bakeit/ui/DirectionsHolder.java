@@ -16,24 +16,29 @@ import butterknife.ButterKnife;
 
 public class DirectionsHolder extends RecyclerView.ViewHolder {
 
+    // Views in the Directions Layout
     @Nullable
     @BindView(R.id.card_title_view) TextView mTitleView;
     @BindView(R.id.direction_long) TextView mDirectionView;
-    @BindView(R.id.direction_step) TextView mStepView;
+    @BindView(R.id.description_short) TextView mStepView;
 
+    // Constructor for the Holder
     public DirectionsHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);
     }
 
+    // Will Display the title of the Recipe
     public TextView getTitleView() {
         return mTitleView;
     }
 
+    // Will display a long string of instructions for this step
     public TextView getDirectionView() {
         return mDirectionView;
     }
 
+    // Will display a short description of the current step
     public TextView getStepView() {
         return mStepView;
     }

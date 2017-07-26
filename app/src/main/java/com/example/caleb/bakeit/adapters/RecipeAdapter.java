@@ -1,4 +1,4 @@
-package com.example.caleb.bakeit.ui;
+package com.example.caleb.bakeit.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
+import com.example.caleb.bakeit.ui.DirectionsActivity;
+import com.example.caleb.bakeit.ui.DirectionsHolder;
+import com.example.caleb.bakeit.ui.IngredientsHolder;
+import com.example.caleb.bakeit.ui.RecipeHolder;
 
 import java.util.ArrayList;
 
@@ -71,7 +76,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     } else {
                         content = recipeDirections.getStepContent();
                     }
-                    stepView.setText(recipeDirections.getStepNumber());
+                    stepView.setText(recipeDirections.getStepDescription());
                     contentView.setText(content);
                     configureDirectionsHolder(directionsHolder, position);
                 }
@@ -85,7 +90,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     TextView measurementView = ((IngredientsHolder) holder).getIngredientMeasurementView();
 
                     ingredientView.setText(recipeIngredients.getIngredient());
-                    quantityView.setText(recipeIngredients.getQuantity());
+                    //quantityView.setText(recipeIngredients.getQuantity());
                     measurementView.setText(recipeIngredients.getMeasurement());
 
                     configureIngredientsHolder(ingredientsHolder, position);
@@ -99,7 +104,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     TextView titleView = ((RecipeHolder) holder).getTitleTextView();
                     titleView.setText(recipe.getTitle());
                     configureRecipeHolder(recipeHolder, position);
-                    recipeHolder.getCardView().setOnClickListener(new View.OnClickListener() {
+                    AdapterView.OnClickListener mOnClickListener = new AdapterView.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent directionsIntent = new Intent(mContext, DirectionsActivity.class);
@@ -107,7 +112,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             directionsIntent.putExtras(mBundle);
                             mContext.startActivity(directionsIntent);
                         }
-                    });
+                    };
+                    ((RecipeHolder) holder).getCardView().setOnClickListener(mOnClickListener);
                 }
         }
     }

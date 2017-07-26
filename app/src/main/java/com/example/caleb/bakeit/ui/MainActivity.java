@@ -18,6 +18,7 @@ import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
 import com.example.caleb.bakeit.Utils.RecipeLoader;
+import com.example.caleb.bakeit.adapters.RecipeAdapter;
 
 import java.util.ArrayList;
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 

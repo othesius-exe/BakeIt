@@ -15,13 +15,14 @@ import butterknife.ButterKnife;
  */
 
 public class IngredientsHolder extends RecyclerView.ViewHolder {
+
     @Nullable
     @BindView(R.id.recipe_title) TextView mTitleView;
     @BindView(R.id.ingredient_name) TextView mIngredientNameView;
     @BindView(R.id.ingredient_measurement) TextView mIngredientMeasurementView;
     @BindView(R.id.ingredient_quantity) TextView mIngredientQuantityView;
 
-    IngredientsHolder(View view) {
+    public IngredientsHolder(View view) {
         super(view);
 
         ButterKnife.bind(this, view);

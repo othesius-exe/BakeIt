@@ -26,8 +26,6 @@ public class RecipeHolder extends RecyclerView.ViewHolder {
     public RecipeHolder(View view) {
         super(view);
 
-        assert view != null;
-
         try {
             ButterKnife.bind(this, view);
         } catch (Exception e) {

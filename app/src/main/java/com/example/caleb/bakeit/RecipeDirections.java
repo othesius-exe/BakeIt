@@ -13,18 +13,16 @@ public class RecipeDirections implements Parcelable {
     // Instructions
     private int mStepNumber;
 
+    private String mStepDescription;
+
     private String mStepContent;
 
     private String mVideoUrl;
 
-    public RecipeDirections(int stepNumber, String stepContent) {
+    public RecipeDirections(int stepNumber, String stepDescription, String stepContent, String videoUrl) {
         mStepContent = stepContent;
         mStepNumber = stepNumber;
-    }
-
-    public RecipeDirections(int stepNumber, String stepContent, String videoUrl) {
-        mStepContent = stepContent;
-        mStepNumber = stepNumber;
+        mStepDescription = stepDescription;
         mVideoUrl = videoUrl;
     }
 
@@ -36,6 +34,10 @@ public class RecipeDirections implements Parcelable {
         return mStepContent;
     }
 
+    public String getStepDescription() {
+        return mStepDescription;
+    }
+
     public String getVideoUrl() {
         return mVideoUrl;
     }
@@ -44,6 +46,7 @@ public class RecipeDirections implements Parcelable {
         mStepNumber = in.readInt();
         mStepContent = in.readString();
         mVideoUrl = in.readString();
+        mStepDescription = in.readString();
     }
 
     @Override
@@ -56,6 +59,7 @@ public class RecipeDirections implements Parcelable {
         dest.writeInt(mStepNumber);
         dest.writeString(mStepContent);
         dest.writeString(mVideoUrl);
+        dest.writeString(mStepDescription);
     }
 
     @SuppressWarnings("unused")
