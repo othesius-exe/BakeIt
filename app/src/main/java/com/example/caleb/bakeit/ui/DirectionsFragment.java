@@ -32,12 +32,11 @@ public class DirectionsFragment extends Fragment {
     private Bundle mBundle;
     @BindView(R.id.directions_recycler) RecyclerView mDirectionRecycler;
 
-    private static OnVideoSelectedListener mCallback;
     private static DirectionsFragment.OnVideoSelectedListener mListener;
 
 
     public interface OnVideoSelectedListener {
-        void getUrl(String url);
+        void prepMediaPlayer(String url);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class DirectionsFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            mCallback = (OnVideoSelectedListener) context;
+            mListener = (OnVideoSelectedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + "Must Implement Listener");
         }
@@ -91,7 +90,7 @@ public class DirectionsFragment extends Fragment {
     }
 
     public void setUri(String url) {
-        mListener.getUrl(url);
+        mListener.prepMediaPlayer(url);
     }
 
 }

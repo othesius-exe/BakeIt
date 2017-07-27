@@ -66,6 +66,10 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     private String directionsTitle = "Directions";
     private String ingredientsTitle = "Ingredients";
 
+    private ExtractorsFactory mExtractorsFactory;
+    private DataSource.Factory mDataSourceFactory;
+    private MediaSource mVideoSource;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,18 +122,18 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
         TrackSelector trackSelector =
                 new DefaultTrackSelector(videoTrackSelectionFactory);
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(), getString(R.string.app_name));
-        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+        mDataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(), getString(R.string.app_name));
+        mExtractorsFactory = new DefaultExtractorsFactory();
 
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector);
         mExoPlayerView.setPlayer(mExoPlayer);
-
-        MediaSource videoSource = new ExtractorMediaSource(mUri, dataSourceFactory, extractorsFactory, null, null);
-        mExoPlayer.prepare(videoSource);
     }
 
     @Override
-    public void getUrl(String url) {
+    public void prepMediaPlayer(String url) {
         mUri = Uri.parse(url);
+        mVideoSource = new ExtractorMediaSource(mUri, mDataSourceFactory, mExtractorsFactory, null, null);
+        mExoPlayer.prepare(mVideoSource);
     }
+
 }
