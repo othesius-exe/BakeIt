@@ -1,6 +1,7 @@
 package com.example.caleb.bakeit.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -15,13 +16,19 @@ import com.example.caleb.bakeit.RecipeIngredients;
 import com.example.caleb.bakeit.adapters.RecipeInfoPagerAdapter;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 
 import java.util.ArrayList;
 
@@ -53,6 +60,11 @@ public class DirectionsActivity extends FragmentActivity {
     @BindView(R.id.view_pager) ViewPager mViewPager;
     @BindView(R.id.exo_player) SimpleExoPlayerView mExoPlayerView;
 
+    private SimpleExoPlayer mExoPlayer;
+    private String mUrl;
+    private Uri mUri;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +83,11 @@ public class DirectionsActivity extends FragmentActivity {
             // Draw the ArrayLists of Directions and Ingredients out
             mRecipeDirectionsArrayList = mRecipe.getDirections();
             mRecipeIngredientsArrayList = mRecipe.getIngredients();
+        }
+
+        for (int i = 0; i < mRecipeDirectionsArrayList.size(); i++) {
+            RecipeDirections recipeDirections = mRecipeDirectionsArrayList.get(i);
+            mUrl = recipeDirections.getVideoUrl();
         }
 
         mBundle.putParcelableArrayList("directions", mRecipeDirectionsArrayList);
@@ -99,6 +116,7 @@ public class DirectionsActivity extends FragmentActivity {
         mViewPager.setAdapter(mRecipeInfoPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
 
+
         // Create an ExoPlayer instance
         Handler mainHandler = new Handler();
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -106,10 +124,14 @@ public class DirectionsActivity extends FragmentActivity {
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
         TrackSelector trackSelector =
                 new DefaultTrackSelector(videoTrackSelectionFactory);
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(), getString(R.string.app_name));
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 
-        SimpleExoPlayer player =
-                ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector);
+        mExoPlayerView.setPlayer(mExoPlayer);
 
-        mExoPlayerView.setPlayer(player);
+        mUri = Uri.parse(mUrl);
+        MediaSource videoSource = new ExtractorMediaSource(mUri, dataSourceFactory, extractorsFactory, null, null);
+        mExoPlayer.prepare(videoSource);
     }
 }

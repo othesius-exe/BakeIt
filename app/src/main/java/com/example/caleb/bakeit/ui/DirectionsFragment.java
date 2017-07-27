@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.RecipeDirections;
-import com.example.caleb.bakeit.RecipeIngredients;
 import com.example.caleb.bakeit.adapters.RecipeAdapter;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 
 import java.util.ArrayList;
 
@@ -27,10 +27,12 @@ public class DirectionsFragment extends Fragment {
 
     private RecipeAdapter mDirectionsAdapter;
     private LinearLayoutManager mLayoutManager;
-    private ArrayList<RecipeIngredients> mRecipeDirectionsArray;
+    private ArrayList<RecipeDirections> mRecipeDirectionsArray;
     private ArrayList<Object> mDirectionsObjectsArray;
     private Bundle mBundle;
+    private String mUrl;
     @BindView(R.id.directions_recycler) RecyclerView mDirectionRecycler;
+    SimpleExoPlayerView mExoPlayerView;
 
     // Log Tag
     private static final String LOG_TAG = DirectionsFragment.class.getSimpleName();
@@ -48,6 +50,7 @@ public class DirectionsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -65,6 +68,7 @@ public class DirectionsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mDirectionRecycler.setLayoutManager(mLayoutManager);
         mDirectionRecycler.setAdapter(mDirectionsAdapter);
+
         return view;
     }
 }

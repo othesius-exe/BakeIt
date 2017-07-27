@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caleb.bakeit.R;
@@ -79,8 +80,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                     if (!recipeDirections.getVideoUrl().equals("")) {
                         videoUrl = recipeDirections.getVideoUrl();
-                        ((DirectionsHolder) holder).getImageView().setVisibility(View.VISIBLE);
+                        ImageView imageView = ((DirectionsHolder) holder).getImageView();
+                        imageView.setVisibility(View.VISIBLE);
+                        imageView.setScaleType(ImageView.ScaleType.FIT_START);
                     }
+
                     stepView.setText(recipeDirections.getStepDescription());
                     contentView.setText(content);
                     configureDirectionsHolder(directionsHolder, position);
