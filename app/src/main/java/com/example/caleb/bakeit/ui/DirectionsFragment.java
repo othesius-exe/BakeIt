@@ -1,5 +1,6 @@
 package com.example.caleb.bakeit.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.adapters.RecipeAdapter;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 
 import java.util.ArrayList;
 
@@ -30,9 +30,24 @@ public class DirectionsFragment extends Fragment {
     private ArrayList<RecipeDirections> mRecipeDirectionsArray;
     private ArrayList<Object> mDirectionsObjectsArray;
     private Bundle mBundle;
-    private String mUrl;
     @BindView(R.id.directions_recycler) RecyclerView mDirectionRecycler;
-    SimpleExoPlayerView mExoPlayerView;
+
+    OnVideoSelectedListener mCallback;
+
+    public interface OnVideoSelectedListener {
+        void getUrl(int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnVideoSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + "Must Implement Listener");
+        }
+    }
 
     // Log Tag
     private static final String LOG_TAG = DirectionsFragment.class.getSimpleName();
@@ -69,6 +84,8 @@ public class DirectionsFragment extends Fragment {
         mDirectionRecycler.setLayoutManager(mLayoutManager);
         mDirectionRecycler.setAdapter(mDirectionsAdapter);
 
+
         return view;
     }
+
 }

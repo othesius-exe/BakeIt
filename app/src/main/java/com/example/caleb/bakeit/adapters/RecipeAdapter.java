@@ -85,12 +85,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mUri = Uri.parse(recipeDirections.getVideoUrl());
                         imageView.setVisibility(View.VISIBLE);
                         imageView.setScaleType(ImageView.ScaleType.FIT_START);
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                            }
-                        });
                     }
 
                     stepView.setText(recipeDirections.getStepDescription());

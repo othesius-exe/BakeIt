@@ -3,7 +3,6 @@ package com.example.caleb.bakeit.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -39,7 +38,7 @@ import butterknife.ButterKnife;
  *
  */
 
-public class DirectionsActivity extends FragmentActivity {
+public class DirectionsActivity extends FragmentActivity implements DirectionsFragment.OnVideoSelectedListener {
 
     private String LOG_TAG = DirectionsActivity.class.getSimpleName();
 
@@ -85,11 +84,6 @@ public class DirectionsActivity extends FragmentActivity {
             mRecipeIngredientsArrayList = mRecipe.getIngredients();
         }
 
-        for (int i = 0; i < mRecipeDirectionsArrayList.size(); i++) {
-            RecipeDirections recipeDirections = mRecipeDirectionsArrayList.get(i);
-            mUrl = recipeDirections.getVideoUrl();
-        }
-
         mBundle.putParcelableArrayList("directions", mRecipeDirectionsArrayList);
         mBundle.putString("title", "Directions");
         mBundle.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
@@ -117,7 +111,6 @@ public class DirectionsActivity extends FragmentActivity {
         mViewPager.setOffscreenPageLimit(1);
 
         // Create an ExoPlayer instance
-        Handler mainHandler = new Handler();
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
@@ -129,9 +122,15 @@ public class DirectionsActivity extends FragmentActivity {
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector);
         mExoPlayerView.setPlayer(mExoPlayer);
 
-        mUri = Uri.parse(mUrl);
         MediaSource videoSource = new ExtractorMediaSource(mUri, dataSourceFactory, extractorsFactory, null, null);
         mExoPlayer.prepare(videoSource);
-        mExoPlayer.release();
+    }
+
+
+    @Override
+    public void getUrl(int position) {
+        RecipeDirections recipeDirections = mRecipeDirectionsArrayList.get(position);
+        mUrl = recipeDirections.getVideoUrl();
+        mUri = Uri.parse(mUrl);
     }
 }
