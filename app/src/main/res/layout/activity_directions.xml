@@ -17,22 +17,17 @@
         <android.support.v4.view.PagerTitleStrip
             android:id="@+id/title_strip"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/title_strip_height"
             android:background="@color/colorAccent"/>
 
     </android.support.v4.view.ViewPager>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recipe_title"/>
-
-
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/exo_player"
         android:layout_width="match_parent"
         android:layout_height="@dimen/exo_player_height"
-        android:id="@+id/exo_player"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        >
 
     </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
 
