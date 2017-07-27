@@ -2,6 +2,7 @@ package com.example.caleb.bakeit.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,15 @@ import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
 import com.example.caleb.bakeit.adapters.RecipeInfoPagerAdapter;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 
 import java.util.ArrayList;
 
@@ -41,6 +51,7 @@ public class DirectionsActivity extends FragmentActivity {
     private Bundle mBundle;
 
     @BindView(R.id.view_pager) ViewPager mViewPager;
+    @BindView(R.id.exo_player) SimpleExoPlayerView mExoPlayerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,5 +98,18 @@ public class DirectionsActivity extends FragmentActivity {
         mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
         mViewPager.setAdapter(mRecipeInfoPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
+
+        // Create an ExoPlayer instance
+        Handler mainHandler = new Handler();
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelection.Factory videoTrackSelectionFactory =
+                new AdaptiveTrackSelection.Factory(bandwidthMeter);
+        TrackSelector trackSelector =
+                new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        SimpleExoPlayer player =
+                ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+
+        mExoPlayerView.setPlayer(player);
     }
 }

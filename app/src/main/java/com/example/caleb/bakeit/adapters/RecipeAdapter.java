@@ -66,6 +66,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (holder.getItemViewType()) {
             case DIRECTIONS:
                 String content = "";
+                String videoUrl = "";
                 DirectionsHolder directionsHolder = (DirectionsHolder) holder;
                 RecipeDirections recipeDirections = (RecipeDirections) mObjects.get(position);
                 for (int d = 0; d < mObjects.size(); d++) {
@@ -75,6 +76,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         content = mContext.getResources().getString(R.string.error);
                     } else {
                         content = recipeDirections.getStepContent();
+                    }
+                    if (!recipeDirections.getVideoUrl().equals("")) {
+                        videoUrl = recipeDirections.getVideoUrl();
+                        ((DirectionsHolder) holder).getImageView().setVisibility(View.VISIBLE);
                     }
                     stepView.setText(recipeDirections.getStepDescription());
                     contentView.setText(content);
@@ -151,6 +156,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (directions != null) {
             holder.getDirectionView();
             holder.getStepView();
+            holder.getImageView();
         }
     }
 

@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ingredient_list"
+    style="@style/card_style"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/card_top_bottom_padding"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:layout_marginBottom="@dimen/card_top_bottom_margin"
+    android:paddingTop="@dimen/card_top_bottom_padding">
 
-    <TextView
-        android:id="@+id/ingredient_name"
-        style="@style/text_view_style"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/text_view_top_bottom_margin"
-        android:text="@string/ingredient"/>
+        android:background="@color/colorPrimary">
 
-    <TextView
+        <TextView
+            android:id="@+id/ingredient_name"
+            style="@style/text_view_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/text_view_top_bottom_margin"
+            android:text="@string/ingredient"/>
+
+        <TextView
             android:id="@+id/ingredient_quantity"
             style="@style/text_view_style"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/quantity"/>
 
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/divider"
         android:background="@color/colorAccent"/>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

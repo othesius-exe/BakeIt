@@ -3,6 +3,7 @@ package com.example.caleb.bakeit.ui;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caleb.bakeit.R;
@@ -22,6 +23,7 @@ public class DirectionsHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.direction_long) TextView mDirectionView;
     @BindView(R.id.description_short) TextView mStepView;
     @BindView(R.id.divider) TextView mDivider;
+    @BindView(R.id.watch_video) ImageView mImageView;
 
     // Constructor for the Holder
     public DirectionsHolder(View view) {
@@ -42,6 +44,10 @@ public class DirectionsHolder extends RecyclerView.ViewHolder {
     // Will display a short description of the current step
     public TextView getStepView() {
         return mStepView;
+    }
+
+    public ImageView getImageView() {
+        return mImageView;
     }
 
     public void setTitleTextView(TextView titleText) {

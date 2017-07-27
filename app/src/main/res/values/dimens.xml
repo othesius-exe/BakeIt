@@ -33,4 +33,10 @@
     <!-- ExoPlayer Dimens -->
     <dimen name="exo_player_height">200dp</dimen>
 
+    <!-- ImageView Height -->
+    <dimen name="play_button_height">40dp</dimen>
+
+    <!-- Divider Height -->
+    <dimen name="divider">2dp</dimen>
+
 </resources>
