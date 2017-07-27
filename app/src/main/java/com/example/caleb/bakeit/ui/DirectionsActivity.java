@@ -63,6 +63,8 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     public String mUrl;
     private Uri mUri;
 
+    private String directionsTitle = "Directions";
+    private String ingredientsTitle = "Ingredients";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,14 +94,14 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         // Check for a savedInstance
         // Otherwise create a new instance
         if (savedInstanceState == null) {
-            DirectionsFragment directionsFragment = new DirectionsFragment();
+            DirectionsFragment directionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
 
             directionsFragment.setArguments(mBundle);
             mSupportFragmentManager.beginTransaction()
                     .add(R.id.view_pager, directionsFragment)
                     .commit();
 
-            IngredientFragment ingredientFragment = new IngredientFragment();
+            IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
             ingredientFragment.setArguments(mBundle);
             mSupportFragmentManager.beginTransaction()
                     .add(R.id.view_pager, ingredientFragment)
@@ -126,11 +128,8 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         mExoPlayer.prepare(videoSource);
     }
 
-
     @Override
-    public void getUrl(int position) {
-        RecipeDirections recipeDirections = mRecipeDirectionsArrayList.get(position);
-        mUrl = recipeDirections.getVideoUrl();
-        mUri = Uri.parse(mUrl);
+    public void getUrl(String url) {
+        mUri = Uri.parse(url);
     }
 }

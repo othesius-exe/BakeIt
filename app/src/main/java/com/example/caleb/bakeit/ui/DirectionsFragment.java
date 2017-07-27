@@ -32,10 +32,12 @@ public class DirectionsFragment extends Fragment {
     private Bundle mBundle;
     @BindView(R.id.directions_recycler) RecyclerView mDirectionRecycler;
 
-    OnVideoSelectedListener mCallback;
+    private static OnVideoSelectedListener mCallback;
+    private static DirectionsFragment.OnVideoSelectedListener mListener;
+
 
     public interface OnVideoSelectedListener {
-        void getUrl(int position);
+        void getUrl(String url);
     }
 
     @Override
@@ -53,12 +55,13 @@ public class DirectionsFragment extends Fragment {
     private static final String LOG_TAG = DirectionsFragment.class.getSimpleName();
 
     // Constructor
-    public static DirectionsFragment newInstance(String title, ArrayList<RecipeDirections> directions) {
+    public static DirectionsFragment newInstance(String title, ArrayList<RecipeDirections> directions, OnVideoSelectedListener listener) {
         DirectionsFragment directionsFragment = new DirectionsFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("directions", directions);
         args.putString("title", title);
         directionsFragment.setArguments(args);
+        mListener = listener;
         return directionsFragment;
     }
 
@@ -79,13 +82,16 @@ public class DirectionsFragment extends Fragment {
         mDirectionsObjectsArray = new ArrayList<>();
         mRecipeDirectionsArray = mBundle.getParcelableArrayList("directions");
         mDirectionsObjectsArray = new ArrayList<Object>(mRecipeDirectionsArray);
-        mDirectionsAdapter = new RecipeAdapter(getContext(), mDirectionsObjectsArray);
+        mDirectionsAdapter = new RecipeAdapter(getContext(), this, mDirectionsObjectsArray);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mDirectionRecycler.setLayoutManager(mLayoutManager);
         mDirectionRecycler.setAdapter(mDirectionsAdapter);
 
-
         return view;
+    }
+
+    public void setUri(String url) {
+        mListener.getUrl(url);
     }
 
 }

@@ -2,7 +2,6 @@ package com.example.caleb.bakeit.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
 import com.example.caleb.bakeit.ui.DirectionsActivity;
+import com.example.caleb.bakeit.ui.DirectionsFragment;
 import com.example.caleb.bakeit.ui.DirectionsHolder;
 import com.example.caleb.bakeit.ui.IngredientsHolder;
 import com.example.caleb.bakeit.ui.RecipeHolder;
@@ -33,10 +33,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int DIRECTIONS = 0, INGREDIENTS = 1, RECIPE = 2;
     private Context mContext;
     private Bundle mBundle;
-    private Uri mUri;
+    private DirectionsFragment directionsFragment;
+    private String mUrl;
 
     // Give the Adapter a context and a list of Objects
     public RecipeAdapter(Context context, ArrayList<Object> objects) {
+        mObjects = objects;
+        mContext = context;
+    }
+
+    public RecipeAdapter(Context context, DirectionsFragment fragment, ArrayList<Object> objects) {
+        directionsFragment = fragment;
         mObjects = objects;
         mContext = context;
     }
@@ -69,9 +76,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (holder.getItemViewType()) {
             case DIRECTIONS:
                 String content = "";
-                String videoUrl = "";
+                mUrl = "";
                 DirectionsHolder directionsHolder = (DirectionsHolder) holder;
-                RecipeDirections recipeDirections = (RecipeDirections) mObjects.get(position);
+                final RecipeDirections recipeDirections = (RecipeDirections) mObjects.get(position);
                 for (int d = 0; d < mObjects.size(); d++) {
                     TextView stepView = ((DirectionsHolder) holder).getStepView();
                     TextView contentView = ((DirectionsHolder) holder).getDirectionView();
@@ -82,10 +89,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         content = recipeDirections.getStepContent();
                     }
                     if (!recipeDirections.getVideoUrl().equals("")) {
-                        mUri = Uri.parse(recipeDirections.getVideoUrl());
                         imageView.setVisibility(View.VISIBLE);
                         imageView.setScaleType(ImageView.ScaleType.FIT_START);
                     }
+
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mUrl = recipeDirections.getVideoUrl();
+                            directionsFragment.setUri(mUrl);
+                        }
+                    });
 
                     stepView.setText(recipeDirections.getStepDescription());
                     contentView.setText(content);

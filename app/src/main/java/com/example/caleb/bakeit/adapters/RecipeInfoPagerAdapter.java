@@ -25,6 +25,7 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
     private Bundle mBundle;
     private ArrayList<RecipeDirections> mDirections;
     private ArrayList<RecipeIngredients> mIngredients;
+    private DirectionsFragment.OnVideoSelectedListener mListener;
     private static int FRAGMENTS = 2;
     private String mTitle;
 
@@ -46,7 +47,7 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return IngredientFragment.newInstance(mIngredientsFragmentName, mIngredients);
             case 1:
-                return DirectionsFragment.newInstance(mDirectionsFragmentName, mDirections);
+                return DirectionsFragment.newInstance(mDirectionsFragmentName, mDirections, mListener);
             default:
                 return null;
         }
@@ -55,9 +56,9 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return "Ingredients";
+            return mIngredientsFragmentName;
         } else if (position == 1) {
-            return "Directions";
+            return mDirectionsFragmentName;
         }
         return null;
 
