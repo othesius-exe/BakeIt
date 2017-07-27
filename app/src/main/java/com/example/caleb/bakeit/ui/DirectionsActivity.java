@@ -61,7 +61,7 @@ public class DirectionsActivity extends FragmentActivity {
     @BindView(R.id.exo_player) SimpleExoPlayerView mExoPlayerView;
 
     private SimpleExoPlayer mExoPlayer;
-    private String mUrl;
+    public String mUrl;
     private Uri mUri;
 
 
@@ -116,7 +116,6 @@ public class DirectionsActivity extends FragmentActivity {
         mViewPager.setAdapter(mRecipeInfoPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
 
-
         // Create an ExoPlayer instance
         Handler mainHandler = new Handler();
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -133,5 +132,6 @@ public class DirectionsActivity extends FragmentActivity {
         mUri = Uri.parse(mUrl);
         MediaSource videoSource = new ExtractorMediaSource(mUri, dataSourceFactory, extractorsFactory, null, null);
         mExoPlayer.prepare(videoSource);
+        mExoPlayer.release();
     }
 }

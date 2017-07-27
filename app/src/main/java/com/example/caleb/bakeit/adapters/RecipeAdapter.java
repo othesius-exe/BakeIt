@@ -2,6 +2,7 @@ package com.example.caleb.bakeit.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int DIRECTIONS = 0, INGREDIENTS = 1, RECIPE = 2;
     private Context mContext;
     private Bundle mBundle;
+    private Uri mUri;
 
     // Give the Adapter a context and a list of Objects
     public RecipeAdapter(Context context, ArrayList<Object> objects) {
@@ -73,16 +75,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 for (int d = 0; d < mObjects.size(); d++) {
                     TextView stepView = ((DirectionsHolder) holder).getStepView();
                     TextView contentView = ((DirectionsHolder) holder).getDirectionView();
+                    ImageView imageView = ((DirectionsHolder) holder).getImageView();
                     if (recipeDirections.getStepContent().equals("")) {
                         content = mContext.getResources().getString(R.string.error);
                     } else {
                         content = recipeDirections.getStepContent();
                     }
                     if (!recipeDirections.getVideoUrl().equals("")) {
-                        videoUrl = recipeDirections.getVideoUrl();
-                        ImageView imageView = ((DirectionsHolder) holder).getImageView();
+                        mUri = Uri.parse(recipeDirections.getVideoUrl());
                         imageView.setVisibility(View.VISIBLE);
                         imageView.setScaleType(ImageView.ScaleType.FIT_START);
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
                     }
 
                     stepView.setText(recipeDirections.getStepDescription());
