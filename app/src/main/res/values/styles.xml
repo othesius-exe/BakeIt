@@ -83,4 +83,15 @@
         <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
     </style>
 
+    <style name="header_styles">
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/headerText</item>
+        <item name="android:padding">@dimen/text_view_right_left_padding</item>
+    </style>
+
+    <style name="landscape_styles">
+
+    </style>
+
 </resources>

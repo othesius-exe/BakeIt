@@ -33,11 +33,20 @@
     <!-- ExoPlayer Dimens -->
     <dimen name="exo_player_height">200dp</dimen>
     <dimen name="exo_player_tablet_height">275dp</dimen>
+    <dimen name="exo_player_land_height">400dp</dimen>
+    <dimen name="exo_player_land_width">400dp</dimen>
 
     <!-- ImageView Height -->
     <dimen name="play_button_height">40dp</dimen>
 
     <!-- Divider Height -->
     <dimen name="divider">2dp</dimen>
+
+    <!-- Header heights -->
+    <dimen name="header_height">50dp</dimen>
+
+    <!-- Fragment container dimens -->
+    <dimen name="container_height">200dp</dimen>
+    <dimen name="container_width_land">200dp</dimen>
 
 </resources>

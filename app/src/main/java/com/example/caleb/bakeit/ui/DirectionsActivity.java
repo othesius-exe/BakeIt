@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -68,7 +67,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     private String directionsTitle = "Directions";
     private String ingredientsTitle = "Ingredients";
 
-    private boolean isTablet = true;
+    private boolean isTablet = false;
 
     private ExtractorsFactory mExtractorsFactory;
     private DataSource.Factory mDataSourceFactory;
@@ -81,16 +80,6 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         ButterKnife.bind(this);
         mSupportFragmentManager = getSupportFragmentManager();
         mBundle = new Bundle();
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        float width = metrics.widthPixels / metrics.ydpi;
-        float height = metrics.heightPixels / metrics.xdpi;
-        double diagonal = Math.sqrt(width * width + height * height);
-
-        if (diagonal > 7.0) {
-            isTablet = true;
-        }
 
         // Get the starting intent
         Intent intent = getIntent();
@@ -109,21 +98,8 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         mBundle.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
         mBundle.putString("title", "Ingredients");
 
-        // Check for a savedInstance
-        // Otherwise create a new instance
-        if (savedInstanceState == null) {
-            DirectionsFragment directionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
-
-            directionsFragment.setArguments(mBundle);
-            mSupportFragmentManager.beginTransaction()
-                    .add(R.id.view_pager, directionsFragment)
-                    .commit();
-
-            IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
-            ingredientFragment.setArguments(mBundle);
-            mSupportFragmentManager.beginTransaction()
-                    .add(R.id.view_pager, ingredientFragment)
-                    .commit();
+        if(findViewById(R.id.tablet_activity) != null || findViewById(R.id.tablet_landscape) != null) {
+            isTablet = true;
         }
 
         if (!isTablet) {

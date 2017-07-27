@@ -10,6 +10,9 @@
     <string name="direction">Do these things in this order.</string>
     <string name="step">1:</string>
 
+    <string name="ingredients_header">Ingredients</string>
+    <string name="directions_header">Directions</string>
+
     <!-- Error Strings -->
     <string name="error">Could not find Recipe</string>
 </resources>

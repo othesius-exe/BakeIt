@@ -30,7 +30,7 @@ public class DirectionsFragment extends Fragment {
     private ArrayList<RecipeDirections> mRecipeDirectionsArray;
     private ArrayList<Object> mDirectionsObjectsArray;
     private Bundle mBundle;
-    private boolean isTablet = false;
+    private boolean isTablet = true;
     @BindView(R.id.directions_recycler) RecyclerView mDirectionRecycler;
 
     private static DirectionsFragment.OnVideoSelectedListener mListener;
@@ -85,8 +85,13 @@ public class DirectionsFragment extends Fragment {
         mDirectionsAdapter = new RecipeAdapter(getContext(), this, mDirectionsObjectsArray);
         mLayoutManager = new LinearLayoutManager(getContext());
         if (isTablet) {
-            mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            mLayoutManager.setReverseLayout(false);
+            if (getResources().getConfiguration().orientation == 1) {
+                mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                mLayoutManager.setReverseLayout(false);
+            } else {
+                mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                mLayoutManager.setReverseLayout(false);
+            }
         } else {
             mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mLayoutManager.setReverseLayout(false);

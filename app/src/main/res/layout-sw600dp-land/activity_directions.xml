@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tablet_landscape">
+    
+    <FrameLayout
+        android:id="@+id/ingredients_container"
+        android:layout_width="@dimen/container_width_land"
+        android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <FrameLayout
+        android:layout_toRightOf="@+id/ingredients_container"
+        android:id="@+id/diretions_container"
+        android:layout_width="@dimen/container_width_land"
+        android:layout_height="match_parent"/>
+    
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/exo_player"
+        android:layout_width="@dimen/exo_player_land_width"
+        android:layout_height="@dimen/exo_player_land_height"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

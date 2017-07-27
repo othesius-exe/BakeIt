@@ -9,10 +9,10 @@
     android:layout_marginBottom="@dimen/card_top_bottom_margin"
     android:paddingTop="@dimen/card_top_bottom_padding">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:paddingTop="@dimen/text_view_top_bottom_padding">
 
@@ -25,6 +25,7 @@
             android:text="@string/ingredient"/>
 
         <TextView
+            android:layout_below="@+id/ingredient_name"
             android:id="@+id/ingredient_quantity"
             style="@style/text_view_style"
             android:layout_width="match_parent"
@@ -32,11 +33,14 @@
             android:layout_weight="1"
             android:text="@string/quantity"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/divider"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/colorAccent"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@color/colorAccent"/>
+    </RelativeLayout>
+
 
 </android.support.v7.widget.CardView>

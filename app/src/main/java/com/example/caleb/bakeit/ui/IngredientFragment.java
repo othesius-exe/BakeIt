@@ -30,6 +30,7 @@ public class IngredientFragment extends Fragment {
     private ArrayList<Object> mIngredientObjectsArray;
     private String mTitle;
     private Bundle mBundle;
+    private boolean isTablet = true;
     @BindView(R.id.ingredients_recycler) RecyclerView mIngredientRecycler;
 
     public static IngredientFragment newInstance(String title, ArrayList<RecipeIngredients> ingredients) {
@@ -59,7 +60,21 @@ public class IngredientFragment extends Fragment {
         mRecipeIngredientsArray = mBundle.getParcelableArrayList("ingredients");
         mIngredientObjectsArray = new ArrayList<Object>(mRecipeIngredientsArray);
         mIngredientsAdapter = new RecipeAdapter(getContext(), mIngredientObjectsArray);
-        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new LinearLayoutManager(getContext());
+
+        if (isTablet) {
+            if (getResources().getConfiguration().orientation == 1) {
+                mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                mLayoutManager.setReverseLayout(false);
+            } else {
+                mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                mLayoutManager.setReverseLayout(false);
+            }
+        } else {
+            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            mLayoutManager.setReverseLayout(false);
+        }
+
         mIngredientRecycler.setLayoutManager(mLayoutManager);
         mIngredientRecycler.setAdapter(mIngredientsAdapter);
         return v;

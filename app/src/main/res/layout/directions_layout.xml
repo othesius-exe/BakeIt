@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/directions_list"
     style="@style/card_style"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/card_top_bottom_margin">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -28,7 +26,8 @@
             style="@style/directions_view_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/direction"/>
+            android:text="@string/direction"
+            android:layout_below="@+id/description_short"/>
 
         <ImageView
             android:id="@+id/watch_video"
@@ -36,14 +35,16 @@
             android:layout_height="@dimen/play_button_height"
             android:layout_gravity="left"
             android:src="@drawable/ic_play_arrow_black_24px"
+            android:layout_above="@+id/divider"
             android:visibility="gone"/>
 
         <TextView
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent"
+            android:layout_alignParentBottom="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
