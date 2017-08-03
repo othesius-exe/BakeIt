@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -109,7 +108,6 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         isLandscape = isLandscape(this);
 
         if (!isTablet) {
-
             if (savedInstanceState == null) {
                 DirectionsFragment directionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
 
@@ -129,9 +127,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
                 mViewPager.setOffscreenPageLimit(1);
             }
 
-
         } else if (isTablet) {
-
             if (savedInstanceState == null) {
                 DirectionsFragment directionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
 
@@ -159,6 +155,9 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
 
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector);
         mExoPlayerView.setPlayer(mExoPlayer);
+        if (isLandscape) {
+            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+        }
     }
 
     @Override

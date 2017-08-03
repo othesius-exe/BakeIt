@@ -71,14 +71,8 @@ public class IngredientFragment extends Fragment {
         isLandscape = isLandscape(mContext);
 
         if (isTablet) {
-            if (isLandscape) {
-                mIngredientRecycler.setVisibility(View.INVISIBLE);
-            } else {
                 mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 mLayoutManager.setReverseLayout(false);
-            }
-        } else if (!isTablet && isLandscape){
-            mIngredientRecycler.setVisibility(View.INVISIBLE);
         } else {
             mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mLayoutManager.setReverseLayout(false);

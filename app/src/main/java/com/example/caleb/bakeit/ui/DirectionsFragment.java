@@ -93,14 +93,8 @@ public class DirectionsFragment extends Fragment {
         isLandscape = isLandscape(mContext);
 
         if (isTablet) {
-            if (isLandscape) {
-                mDirectionRecycler.setVisibility(View.INVISIBLE);
-            } else {
                 mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 mLayoutManager.setReverseLayout(false);
-            }
-        } else if (!isTablet && isLandscape) {
-            mDirectionRecycler.setVisibility(View.INVISIBLE);
         } else {
             mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mLayoutManager.setReverseLayout(false);
