@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.example.caleb.bakeit.R;
 
@@ -21,7 +21,8 @@ public class RecipeHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.recipe_card_view) CardView mCardView;
 
     @Nullable
-    @BindView(R.id.card_title_view) TextView mTitleTextView;
+    @BindView(R.id.card_title_view)
+    ImageView mTitleTextView;
 
     public RecipeHolder(View view) {
         super(view);
@@ -37,7 +38,7 @@ public class RecipeHolder extends RecyclerView.ViewHolder {
         return mCardView;
     }
 
-    public TextView getTitleTextView() {
+    public ImageView getTitleTextView() {
         return mTitleTextView;
     }
 

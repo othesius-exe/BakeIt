@@ -132,8 +132,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 mBundle = new Bundle();
                 final Recipe recipe = (Recipe) mObjects.get(position);
                 for (int j = 0; j < mObjects.size(); j++) {
-                    TextView titleView = ((RecipeHolder) holder).getTitleTextView();
-                    titleView.setText(recipe.getTitle());
+                    ImageView titleView = ((RecipeHolder) holder).getTitleTextView();
+                    if (recipe.getTitle().equals("Cheesecake")) {
+                        titleView.setImageResource(R.drawable.cheesecake);
+                    } else if (recipe.getTitle().equals("Yellow Cake")) {
+                        titleView.setImageResource(R.drawable.yellowcake);
+                    } else if (recipe.getTitle().equals("Nutella Pie")) {
+                        titleView.setImageResource(R.drawable.nutella);
+                    } else if (recipe.getTitle().equals("Brownies")) {
+                        titleView.setImageResource(R.drawable.brownies);
+                    }
                     configureRecipeHolder(recipeHolder, position);
                     AdapterView.OnClickListener mOnClickListener = new AdapterView.OnClickListener() {
                         @Override

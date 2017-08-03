@@ -1,5 +1,7 @@
 package com.example.caleb.bakeit.ui;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +32,9 @@ public class IngredientFragment extends Fragment {
     private ArrayList<Object> mIngredientObjectsArray;
     private String mTitle;
     private Bundle mBundle;
-    private boolean isTablet = true;
+    private Context mContext;
+    private boolean isTablet = false;
+    private boolean isLandscape = false;
     @BindView(R.id.ingredients_recycler) RecyclerView mIngredientRecycler;
 
     public static IngredientFragment newInstance(String title, ArrayList<RecipeIngredients> ingredients) {
@@ -62,14 +66,19 @@ public class IngredientFragment extends Fragment {
         mIngredientsAdapter = new RecipeAdapter(getContext(), mIngredientObjectsArray);
         mLayoutManager = new LinearLayoutManager(getContext());
 
+        mContext = getContext();
+        isTablet = isTablet(mContext);
+        isLandscape = isLandscape(mContext);
+
         if (isTablet) {
-            if (getResources().getConfiguration().orientation == 1) {
-                mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                mLayoutManager.setReverseLayout(false);
+            if (isLandscape) {
+                mIngredientRecycler.setVisibility(View.INVISIBLE);
             } else {
                 mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 mLayoutManager.setReverseLayout(false);
             }
+        } else if (!isTablet && isLandscape){
+            mIngredientRecycler.setVisibility(View.INVISIBLE);
         } else {
             mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mLayoutManager.setReverseLayout(false);
@@ -78,5 +87,13 @@ public class IngredientFragment extends Fragment {
         mIngredientRecycler.setLayoutManager(mLayoutManager);
         mIngredientRecycler.setAdapter(mIngredientsAdapter);
         return v;
+    }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public static boolean isLandscape(Context context) {
+        return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 }

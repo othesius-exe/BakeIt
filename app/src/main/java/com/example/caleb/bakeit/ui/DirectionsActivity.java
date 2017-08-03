@@ -1,12 +1,15 @@
 package com.example.caleb.bakeit.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
@@ -23,6 +26,7 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -68,6 +72,8 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     private String ingredientsTitle = "Ingredients";
 
     private boolean isTablet = false;
+    private boolean isLandscape = false;
+    private boolean isPlayerPlaying = false;
 
     private ExtractorsFactory mExtractorsFactory;
     private DataSource.Factory mDataSourceFactory;
@@ -80,6 +86,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         ButterKnife.bind(this);
         mSupportFragmentManager = getSupportFragmentManager();
         mBundle = new Bundle();
+
 
         // Get the starting intent
         Intent intent = getIntent();
@@ -98,9 +105,8 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         mBundle.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
         mBundle.putString("title", "Ingredients");
 
-        if(findViewById(R.id.tablet_activity) != null || findViewById(R.id.tablet_landscape) != null) {
-            isTablet = true;
-        }
+        isTablet = isTablet(this);
+        isLandscape = isLandscape(this);
 
         if (!isTablet) {
 
@@ -122,6 +128,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
                 mViewPager.setAdapter(mRecipeInfoPagerAdapter);
                 mViewPager.setOffscreenPageLimit(1);
             }
+
 
         } else if (isTablet) {
 
@@ -159,6 +166,14 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         mUri = Uri.parse(url);
         mVideoSource = new ExtractorMediaSource(mUri, mDataSourceFactory, mExtractorsFactory, null, null);
         mExoPlayer.prepare(mVideoSource);
+        mUrl = mUri.toString();
     }
 
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public static boolean isLandscape(Context context) {
+        return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    }
 }

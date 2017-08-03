@@ -20,11 +20,6 @@
 
     <!-- RecipeDirections Title Text Style within CardView -->
     <style name="card_title_view_style">
-        <item name="android:layout_marginLeft">@dimen/text_view_right_left_margin</item>
-        <item name="android:layout_marginRight">@dimen/text_view_right_left_margin</item>
-        <item name="android:layout_marginBottom">@dimen/text_view_top_bottom_margin</item>
-        <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
-        <item name="android:paddingRight">@dimen/text_view_right_left_padding</item>
         <item name="android:textSize">@dimen/headerText</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:text">@string/recipe</item>

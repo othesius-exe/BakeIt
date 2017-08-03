@@ -1,6 +1,7 @@
 package com.example.caleb.bakeit.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,9 @@ public class DirectionsFragment extends Fragment {
     private ArrayList<RecipeDirections> mRecipeDirectionsArray;
     private ArrayList<Object> mDirectionsObjectsArray;
     private Bundle mBundle;
-    private boolean isTablet = true;
+    private boolean isTablet = false;
+    private boolean isLandscape = false;
+    private Context mContext;
     @BindView(R.id.directions_recycler) RecyclerView mDirectionRecycler;
 
     private static DirectionsFragment.OnVideoSelectedListener mListener;
@@ -84,20 +87,24 @@ public class DirectionsFragment extends Fragment {
         mDirectionsObjectsArray = new ArrayList<Object>(mRecipeDirectionsArray);
         mDirectionsAdapter = new RecipeAdapter(getContext(), this, mDirectionsObjectsArray);
         mLayoutManager = new LinearLayoutManager(getContext());
+
+        mContext = getContext();
+        isTablet = isTablet(mContext);
+        isLandscape = isLandscape(mContext);
+
         if (isTablet) {
-            if (getResources().getConfiguration().orientation == 1) {
-                mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                mLayoutManager.setReverseLayout(false);
+            if (isLandscape) {
+                mDirectionRecycler.setVisibility(View.INVISIBLE);
             } else {
                 mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 mLayoutManager.setReverseLayout(false);
             }
+        } else if (!isTablet && isLandscape) {
+            mDirectionRecycler.setVisibility(View.INVISIBLE);
         } else {
             mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mLayoutManager.setReverseLayout(false);
         }
-
-
 
         mDirectionRecycler.setLayoutManager(mLayoutManager);
         mDirectionRecycler.setAdapter(mDirectionsAdapter);
@@ -107,6 +114,15 @@ public class DirectionsFragment extends Fragment {
 
     public void setUri(String url) {
         mListener.prepMediaPlayer(url);
+    }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+
+    public static boolean isLandscape(Context context) {
+        return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 
 }

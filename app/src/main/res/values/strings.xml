@@ -15,4 +15,6 @@
 
     <!-- Error Strings -->
     <string name="error">Could not find Recipe</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

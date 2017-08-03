@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <supports-screens
-        android:normalScreens="true"
-        android:largeScreens="true"/>
+        android:largeScreens="true"
+        android:normalScreens="true"/>
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,14 +23,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:parentActivityName=".ui.MainActivity"
+        <activity
             android:name=".ui.DirectionsActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.MainActivity"
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android:support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity"/>
         </activity>
+
     </application>
 
 </manifest>

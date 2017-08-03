@@ -4,7 +4,7 @@
     android:id="@+id/directions_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,7 +26,8 @@
         android:id="@+id/exo_player"
         android:layout_width="match_parent"
         android:layout_height="@dimen/exo_player_height"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        app:resize_mode="fill">
 
     </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
 
