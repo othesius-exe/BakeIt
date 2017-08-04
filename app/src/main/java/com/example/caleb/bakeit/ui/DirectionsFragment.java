@@ -78,7 +78,6 @@ public class DirectionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.directions_fragment, container, false);
-
         ButterKnife.bind(this, view);
 
         mBundle = getArguments();
@@ -94,9 +93,8 @@ public class DirectionsFragment extends Fragment {
 
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mLayoutManager.setReverseLayout(false);
-
-        mDirectionRecycler.setLayoutManager(mLayoutManager);
         mDirectionRecycler.setAdapter(mDirectionsAdapter);
+        mDirectionRecycler.setLayoutManager(mLayoutManager);
 
         return view;
     }

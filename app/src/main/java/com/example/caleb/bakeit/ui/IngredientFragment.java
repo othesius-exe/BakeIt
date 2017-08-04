@@ -72,9 +72,9 @@ public class IngredientFragment extends Fragment {
 
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mLayoutManager.setReverseLayout(false);
-
-        mIngredientRecycler.setLayoutManager(mLayoutManager);
         mIngredientRecycler.setAdapter(mIngredientsAdapter);
+        mIngredientRecycler.setLayoutManager(mLayoutManager);
+
         return v;
     }
 
