@@ -154,7 +154,8 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
 
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector);
         mExoPlayerView.setPlayer(mExoPlayer);
-
+        mUrl = mRecipeDirectionsArrayList.get(0).getVideoUrl();
+        prepMediaPlayer(mUrl);
     }
 
     @Override
@@ -191,4 +192,5 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         outState.putString("url", mUrl);
         super.onSaveInstanceState(outState);
     }
+
 }
