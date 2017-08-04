@@ -33,7 +33,7 @@
     <FrameLayout
         android:id="@+id/diretions_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/container_height"
+        android:layout_height="@dimen/directions_container_height"
         android:layout_below="@+id/directions_header" />
 
     </LinearLayout>

@@ -70,13 +70,8 @@ public class IngredientFragment extends Fragment {
         isTablet = isTablet(mContext);
         isLandscape = isLandscape(mContext);
 
-        if (isTablet) {
-                mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                mLayoutManager.setReverseLayout(false);
-        } else {
-            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            mLayoutManager.setReverseLayout(false);
-        }
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLayoutManager.setReverseLayout(false);
 
         mIngredientRecycler.setLayoutManager(mLayoutManager);
         mIngredientRecycler.setAdapter(mIngredientsAdapter);

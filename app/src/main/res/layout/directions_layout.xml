@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:paddingTop="@dimen/card_top_bottom_padding">
 
@@ -35,7 +35,7 @@
             android:layout_gravity="left"
             android:src="@drawable/ic_play_arrow_black_24px"
             android:layout_above="@+id/divider"
-            android:visibility="gone"/>
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/divider"

@@ -25,7 +25,6 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -155,9 +154,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
 
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector);
         mExoPlayerView.setPlayer(mExoPlayer);
-        if (isLandscape) {
-            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
-        }
+
     }
 
     @Override

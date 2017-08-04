@@ -92,13 +92,8 @@ public class DirectionsFragment extends Fragment {
         isTablet = isTablet(mContext);
         isLandscape = isLandscape(mContext);
 
-        if (isTablet) {
-                mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                mLayoutManager.setReverseLayout(false);
-        } else {
-            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            mLayoutManager.setReverseLayout(false);
-        }
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLayoutManager.setReverseLayout(false);
 
         mDirectionRecycler.setLayoutManager(mLayoutManager);
         mDirectionRecycler.setAdapter(mDirectionsAdapter);
