@@ -126,7 +126,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
                 mViewPager.setOffscreenPageLimit(1);
             }
 
-        } else if (isTablet) {
+        }  else if (isTablet) {
             if (savedInstanceState == null) {
                 DirectionsFragment directionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
 
@@ -171,5 +171,24 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
 
     public static boolean isLandscape(Context context) {
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        mRecipeIngredientsArrayList = savedInstanceState.getParcelableArrayList("ingredients");
+        mRecipeDirectionsArrayList = savedInstanceState.getParcelableArrayList("directions");
+        mUrl = savedInstanceState.getString("url");
+
+        prepMediaPlayer(mUrl);
+
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("directions", mRecipeDirectionsArrayList);
+        outState.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
+        outState.putString("url", mUrl);
+        super.onSaveInstanceState(outState);
     }
 }

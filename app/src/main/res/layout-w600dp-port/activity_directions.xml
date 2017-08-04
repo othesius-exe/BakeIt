@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/tablet_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/header_styles"
+            android:id ="@+id/ingredients_header"
+            android:text="@string/ingredients_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@+id/ingredients_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/container_height"
+            android:layout_below="@+id/ingredients_header" />
+
+        <TextView
+            style="@style/header_styles"
+            android:id="@+id/directions_header"
+            android:text="@string/directions_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            android:layout_below="@+id/ingredients_container"/>
+
+        <FrameLayout
+            android:id="@+id/diretions_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/directions_container_height"
+            android:layout_below="@+id/directions_header" />
+
+    </LinearLayout>
+
+
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/exo_player"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exo_player_tablet_height"
+        android:layout_alignParentBottom="true"
+        app:resize_mode="fixed_width"/>
+
+</RelativeLayout>
