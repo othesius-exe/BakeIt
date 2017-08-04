@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -59,8 +60,10 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     private Bundle mBundle;
 
     @Nullable
-    @BindView(R.id.view_pager) ViewPager mViewPager;
-    @BindView(R.id.exo_player) SimpleExoPlayerView mExoPlayerView;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.exo_player)
+    SimpleExoPlayerView mExoPlayerView;
 
     private SimpleExoPlayer mExoPlayer;
     public String mUrl;
@@ -76,6 +79,9 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     private ExtractorsFactory mExtractorsFactory;
     private DataSource.Factory mDataSourceFactory;
     private MediaSource mVideoSource;
+
+    private Fragment mDirectionsFragment;
+    private Fragment mIngredientsFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,38 +113,39 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         isLandscape = isLandscape(this);
 
         if (!isTablet) {
-            if (savedInstanceState == null) {
-                DirectionsFragment directionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
+                if (savedInstanceState == null) {
+                mDirectionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
 
-                directionsFragment.setArguments(mBundle);
+                mDirectionsFragment.setArguments(mBundle);
                 mSupportFragmentManager.beginTransaction()
-                        .add(R.id.view_pager, directionsFragment)
+                        .add(R.id.view_pager, mDirectionsFragment)
                         .commit();
 
-                IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
-                ingredientFragment.setArguments(mBundle);
+                mIngredientsFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
+                mIngredientsFragment.setArguments(mBundle);
                 mSupportFragmentManager.beginTransaction()
-                        .add(R.id.view_pager, ingredientFragment)
+                        .add(R.id.view_pager, mIngredientsFragment)
                         .commit();
-
-                mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
-                mViewPager.setAdapter(mRecipeInfoPagerAdapter);
-                mViewPager.setOffscreenPageLimit(1);
+                if (!isLandscape) {
+                    mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
+                    mViewPager.setAdapter(mRecipeInfoPagerAdapter);
+                    mViewPager.setOffscreenPageLimit(10);
+                }
             }
 
-        }  else if (isTablet) {
+        } else if (isTablet) {
             if (savedInstanceState == null) {
-                DirectionsFragment directionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
+                mDirectionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
 
-                directionsFragment.setArguments(mBundle);
+                mDirectionsFragment.setArguments(mBundle);
                 mSupportFragmentManager.beginTransaction()
-                        .add(R.id.diretions_container, directionsFragment)
+                        .add(R.id.diretions_container, mDirectionsFragment)
                         .commit();
 
-                IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
-                ingredientFragment.setArguments(mBundle);
+                mIngredientsFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
+                mIngredientsFragment.setArguments(mBundle);
                 mSupportFragmentManager.beginTransaction()
-                        .add(R.id.ingredients_container, ingredientFragment)
+                        .add(R.id.ingredients_container, mIngredientsFragment)
                         .commit();
             }
         }
@@ -176,11 +183,17 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        mRecipeIngredientsArrayList = savedInstanceState.getParcelableArrayList("ingredients");
-        mRecipeDirectionsArrayList = savedInstanceState.getParcelableArrayList("directions");
-        mUrl = savedInstanceState.getString("url");
 
-        prepMediaPlayer(mUrl);
+        if (savedInstanceState != null) {
+            mRecipe = savedInstanceState.getParcelable("recipe");
+            mRecipeIngredientsArrayList = savedInstanceState.getParcelableArrayList("ingredients");
+            mRecipeDirectionsArrayList = savedInstanceState.getParcelableArrayList("directions");
+            mDirectionsFragment = getSupportFragmentManager().getFragment(savedInstanceState, directionsTitle);
+            mIngredientsFragment = getSupportFragmentManager().getFragment(savedInstanceState, ingredientsTitle);
+            mUrl = savedInstanceState.getString("url");
+            mBundle = savedInstanceState.getBundle("bundle");
+            prepMediaPlayer(mUrl);
+        }
 
         super.onRestoreInstanceState(savedInstanceState);
     }
@@ -189,7 +202,11 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("directions", mRecipeDirectionsArrayList);
         outState.putParcelableArrayList("ingredients", mRecipeIngredientsArrayList);
+        outState.putParcelable("recipe", mRecipe);
         outState.putString("url", mUrl);
+        outState.putBundle("bundle", mBundle);
+        getSupportFragmentManager().putFragment(outState, ingredientsTitle, mIngredientsFragment);
+        getSupportFragmentManager().putFragment(outState, directionsTitle, mDirectionsFragment);
         super.onSaveInstanceState(outState);
     }
 

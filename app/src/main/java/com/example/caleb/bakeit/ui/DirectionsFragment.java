@@ -79,7 +79,7 @@ public class DirectionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.directions_fragment, container, false);
         ButterKnife.bind(this, view);
-
+        setRetainInstance(true);
         mBundle = getArguments();
         mDirectionsObjectsArray = new ArrayList<>();
         mRecipeDirectionsArray = mBundle.getParcelableArrayList("directions");
@@ -112,4 +112,22 @@ public class DirectionsFragment extends Fragment {
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBundle("bundle", mBundle);
+        outState.putParcelableArrayList("directions", mRecipeDirectionsArray);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
+            mRecipeDirectionsArray = savedInstanceState.getParcelableArrayList("directions");
+        }
+    }
 }

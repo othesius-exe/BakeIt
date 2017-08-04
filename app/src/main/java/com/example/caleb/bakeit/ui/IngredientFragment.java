@@ -56,8 +56,8 @@ public class IngredientFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.ingredients_fragment, container, false);
-
         ButterKnife.bind(this, v);
+        setRetainInstance(true);
 
         mBundle = getArguments();
         mRecipeIngredientsArray = new ArrayList<>();
@@ -84,5 +84,23 @@ public class IngredientFragment extends Fragment {
 
     public static boolean isLandscape(Context context) {
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
+            mRecipeIngredientsArray = savedInstanceState.getParcelableArrayList("ingredients");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBundle("bundle", mBundle);
+        outState.putParcelableArrayList("ingredients", mRecipeIngredientsArray);
     }
 }

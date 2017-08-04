@@ -13,6 +13,21 @@
                     android:layout_height="match_parent"
                     android:visibility="gone">
 
+        <android.support.v4.view.ViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v4.view.PagerTitleStrip
+                android:id="@+id/title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_strip_height"
+                android:background="@color/colorAccent"/>
+
+        </android.support.v4.view.ViewPager>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
