@@ -68,4 +68,5 @@ public class RecipeInfoPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return FRAGMENTS;
     }
+
 }

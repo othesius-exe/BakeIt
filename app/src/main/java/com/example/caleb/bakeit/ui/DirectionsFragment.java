@@ -80,7 +80,14 @@ public class DirectionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.directions_fragment, container, false);
         ButterKnife.bind(this, view);
         setRetainInstance(true);
-        mBundle = getArguments();
+
+        if (savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
+            mRecipeDirectionsArray = savedInstanceState.getParcelableArrayList("directions");
+        } else {
+            mBundle = getArguments();
+        }
+
         mDirectionsObjectsArray = new ArrayList<>();
         mRecipeDirectionsArray = mBundle.getParcelableArrayList("directions");
         mDirectionsObjectsArray = new ArrayList<Object>(mRecipeDirectionsArray);
@@ -118,16 +125,6 @@ public class DirectionsFragment extends Fragment {
 
         outState.putBundle("bundle", mBundle);
         outState.putParcelableArrayList("directions", mRecipeDirectionsArray);
-
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
-            mRecipeDirectionsArray = savedInstanceState.getParcelableArrayList("directions");
-        }
-    }
 }

@@ -59,7 +59,13 @@ public class IngredientFragment extends Fragment {
         ButterKnife.bind(this, v);
         setRetainInstance(true);
 
-        mBundle = getArguments();
+        if (savedInstanceState != null) {
+            mBundle = savedInstanceState.getBundle("bundle");
+            mRecipeIngredientsArray = savedInstanceState.getParcelableArrayList("ingredients");
+        } else {
+            mBundle = getArguments();
+        }
+
         mRecipeIngredientsArray = new ArrayList<>();
         mRecipeIngredientsArray = mBundle.getParcelableArrayList("ingredients");
         mIngredientObjectsArray = new ArrayList<Object>(mRecipeIngredientsArray);
@@ -84,16 +90,6 @@ public class IngredientFragment extends Fragment {
 
     public static boolean isLandscape(Context context) {
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle");
-            mRecipeIngredientsArray = savedInstanceState.getParcelableArrayList("ingredients");
-        }
     }
 
     @Override

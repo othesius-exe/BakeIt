@@ -113,24 +113,22 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         isLandscape = isLandscape(this);
 
         if (!isTablet) {
-                if (savedInstanceState == null) {
-                mDirectionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
+             if (savedInstanceState == null) {
+                 mDirectionsFragment = DirectionsFragment.newInstance(directionsTitle, mRecipeDirectionsArrayList, this);
 
-                mDirectionsFragment.setArguments(mBundle);
-                mSupportFragmentManager.beginTransaction()
-                        .add(R.id.view_pager, mDirectionsFragment)
-                        .commit();
+                 mDirectionsFragment.setArguments(mBundle);
+                 mSupportFragmentManager.beginTransaction()
+                         .add(R.id.view_pager, mDirectionsFragment)
+                         .commit();
 
-                mIngredientsFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
-                mIngredientsFragment.setArguments(mBundle);
-                mSupportFragmentManager.beginTransaction()
-                        .add(R.id.view_pager, mIngredientsFragment)
-                        .commit();
-                if (!isLandscape) {
-                    mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
-                    mViewPager.setAdapter(mRecipeInfoPagerAdapter);
-                    mViewPager.setOffscreenPageLimit(10);
-                }
+                 mIngredientsFragment = IngredientFragment.newInstance(ingredientsTitle, mRecipeIngredientsArrayList);
+                 mIngredientsFragment.setArguments(mBundle);
+                 mSupportFragmentManager.beginTransaction()
+                         .add(R.id.view_pager, mIngredientsFragment)
+                         .commit();
+                 mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
+                 mViewPager.setAdapter(mRecipeInfoPagerAdapter);
+                 mViewPager.setOffscreenPageLimit(2);
             }
 
         } else if (isTablet) {
@@ -149,6 +147,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
                         .commit();
             }
         }
+
 
         // Create an ExoPlayer instance
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -183,19 +182,19 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
 
         if (savedInstanceState != null) {
             mRecipe = savedInstanceState.getParcelable("recipe");
             mRecipeIngredientsArrayList = savedInstanceState.getParcelableArrayList("ingredients");
             mRecipeDirectionsArrayList = savedInstanceState.getParcelableArrayList("directions");
-            mDirectionsFragment = getSupportFragmentManager().getFragment(savedInstanceState, directionsTitle);
-            mIngredientsFragment = getSupportFragmentManager().getFragment(savedInstanceState, ingredientsTitle);
             mUrl = savedInstanceState.getString("url");
             mBundle = savedInstanceState.getBundle("bundle");
             prepMediaPlayer(mUrl);
+            mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
+            mViewPager.setAdapter(mRecipeInfoPagerAdapter);
         }
 
-        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
@@ -205,9 +204,6 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         outState.putParcelable("recipe", mRecipe);
         outState.putString("url", mUrl);
         outState.putBundle("bundle", mBundle);
-        getSupportFragmentManager().putFragment(outState, ingredientsTitle, mIngredientsFragment);
-        getSupportFragmentManager().putFragment(outState, directionsTitle, mDirectionsFragment);
-        super.onSaveInstanceState(outState);
     }
 
 }
