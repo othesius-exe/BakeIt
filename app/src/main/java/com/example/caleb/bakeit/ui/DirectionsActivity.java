@@ -83,6 +83,8 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     private Fragment mDirectionsFragment;
     private Fragment mIngredientsFragment;
 
+    private long mPosition;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,7 +196,10 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
             mRecipeDirectionsArrayList = savedInstanceState.getParcelableArrayList("directions");
             mUrl = savedInstanceState.getString("url");
             mBundle = savedInstanceState.getBundle("bundle");
+            mPosition = savedInstanceState.getLong("position");
             prepMediaPlayer(mUrl);
+            mExoPlayer.seekTo(mPosition);
+            mExoPlayer.setPlayWhenReady(true);
         }
     }
 
@@ -205,7 +210,28 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         outState.putParcelable("recipe", mRecipe);
         outState.putString("url", mUrl);
         outState.putBundle("bundle", mBundle);
+
+        mPosition = mExoPlayer.getCurrentPosition();
+        if (mExoPlayer != null) {
+            outState.putLong("position", mPosition);
+        }
+
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mExoPlayer.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mExoPlayer != null) {
+            prepMediaPlayer(mUrl);
+            mExoPlayer.seekTo(mPosition);
+            mExoPlayer.setPlayWhenReady(true);
+        }
+    }
 }
