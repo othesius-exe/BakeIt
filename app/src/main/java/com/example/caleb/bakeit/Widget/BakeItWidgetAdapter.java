@@ -19,7 +19,7 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
     private RecipeIngredients mIngredients;
     private Context mContext;
 
-    public BakeItWidgetAdapter(Context context) {
+    public BakeItWidgetAdapter(Context context, Intent intent) {
         mContext = context;
     }
 
@@ -30,7 +30,6 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onDataSetChanged() {
-        mIngredients =
     }
 
     @Override
@@ -40,7 +39,7 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public int getCount() {
-       return mIngredients.size();
+        return 0;
     }
 
     @Override
@@ -71,6 +70,10 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
     @Override
     public boolean hasStableIds() {
         return true;
+    }
+
+    public void setIngredientsList(RecipeIngredients ingredients) {
+        mIngredients = ingredients;
     }
 
 }

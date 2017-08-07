@@ -14,6 +14,6 @@ public class BakeItWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new BakeItWidgetAdapter(this);
+        return new BakeItWidgetAdapter(this, intent);
     }
 }

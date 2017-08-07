@@ -42,7 +42,8 @@
                 android:resource="@xml/bake_it_widget_info"/>
         </receiver>
 
-        <service android:name=".Widget.BakeItWidgetService"/>
+        <service android:name=".Widget.BakeItWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>
