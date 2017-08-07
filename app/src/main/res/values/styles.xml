@@ -67,6 +67,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/primaryText</item>
         <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="directions_view_style">
