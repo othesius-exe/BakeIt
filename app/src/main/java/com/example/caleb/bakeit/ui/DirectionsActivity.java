@@ -183,6 +183,10 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        if (!isTablet) {
+            mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
+            mViewPager.setAdapter(mRecipeInfoPagerAdapter);
+        }
 
         if (savedInstanceState != null) {
             mRecipe = savedInstanceState.getParcelable("recipe");
@@ -191,10 +195,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
             mUrl = savedInstanceState.getString("url");
             mBundle = savedInstanceState.getBundle("bundle");
             prepMediaPlayer(mUrl);
-            mRecipeInfoPagerAdapter = new RecipeInfoPagerAdapter(this, mBundle, mSupportFragmentManager);
-            mViewPager.setAdapter(mRecipeInfoPagerAdapter);
         }
-
     }
 
     @Override
@@ -204,6 +205,7 @@ public class DirectionsActivity extends FragmentActivity implements DirectionsFr
         outState.putParcelable("recipe", mRecipe);
         outState.putString("url", mUrl);
         outState.putBundle("bundle", mBundle);
+        super.onSaveInstanceState(outState);
     }
 
 }
