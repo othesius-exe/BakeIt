@@ -28,7 +28,11 @@ public class BakeItWidget extends AppWidgetProvider {
         // Set Click Handler for Widget
         views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
 
+        Intent widgetIntent = new Intent(context, BakeItWidgetService.class);
+        views.setRemoteAdapter(R.id.ingredients_widget, widgetIntent);
+
         // Instruct the widget manager to update the widget
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients_widget);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 

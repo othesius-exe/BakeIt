@@ -3,7 +3,6 @@ package com.example.caleb.bakeit.Widget;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -37,13 +36,14 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onDataSetChanged() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences preferences = mContext.getSharedPreferences("recipe", Context.MODE_PRIVATE);
 
         Gson gson = new Gson();
-        String json = preferences.getString("ingredients", "");
+        String json = preferences.getString("recipe", "");
 
-        Type type = new TypeToken<ArrayList<RecipeIngredients>>(){}.getType();
-        mIngredientsArray = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Recipe>>(){}.getType();
+        mRecipe = gson.fromJson(json, Recipe.class);
+        mIngredientsArray = mRecipe.getIngredients();
     }
 
     @Override
@@ -52,7 +52,11 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public int getCount() {
-        return mIngredientsArray.size();
+        if (mIngredientsArray != null && mIngredientsArray.size() != 0) {
+            return mIngredientsArray.size();
+        } else {
+            return 0;
+        }
     }
 
     @Override

@@ -152,12 +152,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             directionsIntent.putExtras(mBundle);
                             mContext.startActivity(directionsIntent);
 
+                            SharedPreferences mPrefs = mContext.getSharedPreferences("recipe", Context.MODE_APPEND);
                             Gson recipeGson = new Gson();
-                            String json = recipeGson.toJson(recipe.getIngredients());
+                            String json = recipeGson.toJson(recipe);
 
-                            SharedPreferences.Editor editor = mContext.getSharedPreferences("ingredients", Context.MODE_PRIVATE)
-                                    .edit();
-                            editor.putString("ingredients", json);
+                            SharedPreferences.Editor editor = mPrefs.edit();
+                            editor.putString("recipe", json);
                             editor.apply();
                         }
                     };
