@@ -2,12 +2,19 @@ package com.example.caleb.bakeit.Widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeIngredients;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +24,7 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
 
     private Recipe mRecipe;
     private RecipeIngredients mIngredients;
+    private ArrayList<RecipeIngredients> mIngredientsArray = new ArrayList<>();
     private Context mContext;
 
     public BakeItWidgetAdapter(Context context, Intent intent) {
@@ -25,21 +33,26 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onCreate() {
-
     }
 
     @Override
     public void onDataSetChanged() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+        Gson gson = new Gson();
+        String json = preferences.getString("ingredients", "");
+
+        Type type = new TypeToken<ArrayList<RecipeIngredients>>(){}.getType();
+        mIngredientsArray = gson.fromJson(json, type);
     }
 
     @Override
     public void onDestroy() {
-
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mIngredientsArray.size();
     }
 
     @Override
@@ -70,10 +83,6 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
     @Override
     public boolean hasStableIds() {
         return true;
-    }
-
-    public void setIngredientsList(RecipeIngredients ingredients) {
-        mIngredients = ingredients;
     }
 
 }

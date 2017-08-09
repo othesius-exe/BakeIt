@@ -2,6 +2,7 @@ package com.example.caleb.bakeit.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.example.caleb.bakeit.ui.DirectionsFragment;
 import com.example.caleb.bakeit.ui.DirectionsHolder;
 import com.example.caleb.bakeit.ui.IngredientsHolder;
 import com.example.caleb.bakeit.ui.RecipeHolder;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -149,6 +151,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             mBundle.putParcelable("recipe", recipe);
                             directionsIntent.putExtras(mBundle);
                             mContext.startActivity(directionsIntent);
+
+                            Gson recipeGson = new Gson();
+                            String json = recipeGson.toJson(recipe.getIngredients());
+
+                            SharedPreferences.Editor editor = mContext.getSharedPreferences("ingredients", Context.MODE_PRIVATE)
+                                    .edit();
+                            editor.putString("ingredients", json);
+                            editor.apply();
                         }
                     };
                     ((RecipeHolder) holder).getCardView().setOnClickListener(mOnClickListener);
