@@ -63,9 +63,10 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
     public RemoteViews getViewAt(int position) {
         RemoteViews views = new RemoteViews(mContext.getPackageName(),
                 R.layout.widget_ingredient_layout);
+        mIngredients = mIngredientsArray.get(position);
         views.setTextViewText(R.id.widget_recipe_name, mRecipe.getTitle());
         views.setTextViewText(R.id.widget_ingredient, mIngredients.getIngredient());
-        views.setTextViewText(R.id.widget_measurement, String.valueOf(mIngredients.getQuantity()) + " " + mIngredients.getMeasurement());
+        views.setTextViewText(R.id.widget_measurement, String.valueOf(mIngredients.getQuantity() + " " + mIngredients.getMeasurement()));
         return views;
     }
 
