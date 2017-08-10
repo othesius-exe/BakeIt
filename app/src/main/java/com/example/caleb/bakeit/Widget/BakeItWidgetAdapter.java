@@ -3,6 +3,7 @@ package com.example.caleb.bakeit.Widget;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -67,10 +68,20 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
         // Tell it to use views in the widget_ingredient_layout.xml file
         RemoteViews views = new RemoteViews(mContext.getPackageName(),
                 R.layout.widget_ingredient_layout);
-        mIngredients = mIngredientsArray.get(position);
-        views.setTextViewText(R.id.widget_recipe_name, mRecipe.getTitle());
-        views.setTextViewText(R.id.widget_ingredient, mIngredients.getIngredient());
-        views.setTextViewText(R.id.widget_measurement, String.valueOf(mIngredients.getQuantity() + " " + mIngredients.getMeasurement()));
+        if (mIngredientsArray != null) {
+            mIngredients = mIngredientsArray.get(position);
+            views.setTextViewText(R.id.widget_ingredient, mIngredients.getIngredient());
+            views.setTextViewText(R.id.widget_measurement, String.valueOf(mIngredients.getQuantity() + " " + mIngredients.getMeasurement()));
+
+        } else {
+            views.setViewVisibility(R.id.widget_measurement, View.GONE);
+            views.setViewVisibility(R.id.widget_ingredient, View.GONE);
+            views.setViewVisibility(R.id.empty_widget_view, View.VISIBLE);
+        }
+
+        Intent fillInIntent = new Intent();
+        views.setOnClickFillInIntent(R.id.ingredients_widget, fillInIntent);
+
         return views;
     }
 

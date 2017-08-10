@@ -57,6 +57,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         RecyclerView.ViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
+        // Find the object type that was passed
+        // Create a viewholder and inflate the proper layout for that object
         switch(viewType) {
             case DIRECTIONS:
                 // Create a holder for Directions
@@ -69,6 +71,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 viewHolder = new IngredientsHolder(ingredientsHolder);
                 break;
             case RECIPE:
+                // Create a holder for an entire Recipe
                 View recipeHolder = inflater.inflate(R.layout.recipe_card_layout, parent, false);
                 viewHolder = new RecipeHolder(recipeHolder);
         }
@@ -149,11 +152,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     AdapterView.OnClickListener mOnClickListener = new AdapterView.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            // Intent to open the directions activity when a recipe card is selected
                             Intent directionsIntent = new Intent(mContext, DirectionsActivity.class);
+                            // Pack up the entire recipe object that was selected and put it in a bundle
                             mBundle.putParcelable("recipe", recipe);
+                            // Add the bundle to the intent as an extra
                             directionsIntent.putExtras(mBundle);
+                            // Start the activity
                             mContext.startActivity(directionsIntent);
 
+                            // Write the recipe to shared preferences using a GSON structure
                             SharedPreferences mPrefs = mContext.getSharedPreferences("recipe", Context.MODE_APPEND);
                             Gson recipeGson = new Gson();
                             String json = recipeGson.toJson(recipe);
@@ -162,6 +170,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             editor.putString("recipe", json);
                             editor.apply();
 
+                            // Update the widget every time the user selects a recipe
                             Intent updateIntent = new Intent(mContext, BakeItWidget.class);
                             updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
                             mContext.sendBroadcast(updateIntent);
@@ -179,6 +188,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
+        // Finds the type of object being held by the objects Array
         if (mObjects.get(position) instanceof RecipeDirections) {
             return DIRECTIONS;
         } else if (mObjects.get(position) instanceof RecipeIngredients) {
@@ -194,6 +204,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     *
+     *  Helper methods for finding the correct views for each type of holder
+     */
     private void configureDirectionsHolder(DirectionsHolder holder, int position) {
         RecipeDirections directions = (RecipeDirections) mObjects.get(position);
         if (directions != null) {

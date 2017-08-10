@@ -9,12 +9,15 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.example.caleb.bakeit.R;
+import com.example.caleb.bakeit.ui.DirectionsActivity;
 import com.example.caleb.bakeit.ui.MainActivity;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class BakeItWidget extends AppWidgetProvider {
+
+    public static final String EXTRA_LABEL = "what";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -38,6 +41,8 @@ public class BakeItWidget extends AppWidgetProvider {
         // Instruct the widget manager to update the widget
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients_widget);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+
     }
 
     @Override
@@ -46,7 +51,6 @@ public class BakeItWidget extends AppWidgetProvider {
         if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             ComponentName widgetComponent = new ComponentName(context, BakeItWidget.class);
-            int [] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
             widgetManager.notifyAppWidgetViewDataChanged(widgetManager.getAppWidgetIds(widgetComponent), R.id.ingredients_widget);
         }
@@ -58,6 +62,14 @@ public class BakeItWidget extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
+
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.bake_it_widget);
+
+            Intent appIntent = new Intent(context, DirectionsActivity.class);
+            PendingIntent appPendingIntent = android.support.v4.app.TaskStackBuilder.create(context)
+                    .addNextIntentWithParentStack(appIntent)
+                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            views.setPendingIntentTemplate(R.id.ingredients_widget, appPendingIntent);
         }
     }
 
@@ -67,7 +79,7 @@ public class BakeItWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onDisabled(Context context)  {
+    public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
 }
