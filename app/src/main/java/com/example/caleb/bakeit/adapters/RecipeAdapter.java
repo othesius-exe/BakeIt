@@ -1,5 +1,6 @@
 package com.example.caleb.bakeit.adapters;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeDirections;
 import com.example.caleb.bakeit.RecipeIngredients;
+import com.example.caleb.bakeit.Widget.BakeItWidget;
 import com.example.caleb.bakeit.ui.DirectionsActivity;
 import com.example.caleb.bakeit.ui.DirectionsFragment;
 import com.example.caleb.bakeit.ui.DirectionsHolder;
@@ -159,6 +161,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             SharedPreferences.Editor editor = mPrefs.edit();
                             editor.putString("recipe", json);
                             editor.apply();
+
+                            Intent updateIntent = new Intent(mContext, BakeItWidget.class);
+                            updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                            mContext.sendBroadcast(updateIntent);
                         }
                     };
                     ((RecipeHolder) holder).getCardView().setOnClickListener(mOnClickListener);

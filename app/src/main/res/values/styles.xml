@@ -85,8 +85,14 @@
         <item name="android:padding">@dimen/text_view_right_left_padding</item>
     </style>
 
-    <style name="landscape_styles">
-
+    <style name="widget_view_style">
+        <item name="android:layout_height">@dimen/widget_view_height</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/testColor</item>
+        <item name="android:textColor">@color/testAccentColor</item>
+        <item name="android:textSize">@dimen/primaryText</item>
+        <item name="android:paddingLeft">@dimen/text_view_right_left_padding</item>
+        <item name="android:paddingTop">@dimen/text_view_top_bottom_padding</item>
     </style>
 
 </resources>

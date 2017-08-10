@@ -8,4 +8,7 @@
     <color name="primaryText">#000</color>
     <color name="secondaryText">#9E9E9E</color>
     <color name="accentText">#FFF</color>
+
+    <color name="testColor">#000</color>
+    <color name="testAccentColor">#FFF</color>
 </resources>

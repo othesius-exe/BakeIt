@@ -59,8 +59,12 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
         }
     }
 
+    // This is where we set the information we want to display
+    // Into their proper views for the widget
     @Override
     public RemoteViews getViewAt(int position) {
+        // Create a remote views object
+        // Tell it to use views in the widget_ingredient_layout.xml file
         RemoteViews views = new RemoteViews(mContext.getPackageName(),
                 R.layout.widget_ingredient_layout);
         mIngredients = mIngredientsArray.get(position);

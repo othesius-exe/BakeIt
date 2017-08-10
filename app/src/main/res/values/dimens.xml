@@ -23,6 +23,7 @@
     <dimen name="primaryText">18sp</dimen>
     <dimen name="descriptionText">14sp</dimen>
     <dimen name="headerText">32sp</dimen>
+    <dimen name="widget_text_size">12sp</dimen>
 
     <!-- Title Strip Dimens -->
     <dimen name="title_strip_height">54dp</dimen>
@@ -55,5 +56,6 @@ Refer to App Widget Documentation for margin information
 http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
     <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_view_height">20dp</dimen>
 
 </resources>
