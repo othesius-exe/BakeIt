@@ -11,7 +11,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/empty_widget_view"
+        android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_view_height"
         android:text="@string/no_recipe"
