@@ -6,10 +6,11 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.example.caleb.bakeit.R;
-import com.example.caleb.bakeit.ui.DirectionsActivity;
 import com.example.caleb.bakeit.ui.MainActivity;
 
 /**
@@ -22,12 +23,10 @@ public class BakeItWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.bake_it_widget);
-
-        // Create an Intent to launch Directions activity when clicked
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         // Set the BakeItWidgetAdapter on the widget
         // Like a normal adapter, it defines the views to display
@@ -35,13 +34,12 @@ public class BakeItWidget extends AppWidgetProvider {
         Intent widgetIntent = new Intent(context, BakeItWidgetService.class);
         views.setRemoteAdapter(R.id.ingredients_widget, widgetIntent);
 
-        // Set Click Handler for Widget
-        views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
+        // Set an empty view on the widget
+        //views.setEmptyView(R.id.ingredients_widget, R.id.empty_widget_view);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients_widget);
         appWidgetManager.updateAppWidget(appWidgetId, views);
-
 
     }
 
@@ -64,12 +62,11 @@ public class BakeItWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId);
 
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.bake_it_widget);
+            Intent appIntent = new Intent(context, MainActivity.class);
 
-            Intent appIntent = new Intent(context, DirectionsActivity.class);
-            PendingIntent appPendingIntent = android.support.v4.app.TaskStackBuilder.create(context)
-                    .addNextIntentWithParentStack(appIntent)
-                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-            views.setPendingIntentTemplate(R.id.ingredients_widget, appPendingIntent);
+            PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, 0);
+            views.setOnClickPendingIntent(R.id.widget_layout, appPendingIntent);
+            appWidgetManager.updateAppWidget(appWidgetIds, views);
         }
     }
 

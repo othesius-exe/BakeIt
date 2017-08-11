@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/widget_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         style="@style/widget_view_style"
@@ -16,17 +18,5 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_view_height"
         android:text="@string/measurement"/>
-
-    <TextView
-        android:id="@+id/empty_widget_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/text_view_height"
-        android:visibility="gone"
-        android:text="@string/no_recipe"
-        android:gravity="center"
-        android:textSize="@dimen/headerText"
-        android:background="@color/testColor"
-        android:textColor="@color/testAccentColor"/>
-
 
 </LinearLayout>
