@@ -14,7 +14,6 @@
         android:id="@+id/empty_widget_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_view_height"
-        android:visibility="gone"
         android:text="@string/no_recipe"
         android:gravity="center"
         android:textSize="@dimen/headerText"

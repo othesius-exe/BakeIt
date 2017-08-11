@@ -6,8 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.example.caleb.bakeit.R;
@@ -22,9 +21,6 @@ public class BakeItWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.bake_it_widget);
 
@@ -34,13 +30,12 @@ public class BakeItWidget extends AppWidgetProvider {
         Intent widgetIntent = new Intent(context, BakeItWidgetService.class);
         views.setRemoteAdapter(R.id.ingredients_widget, widgetIntent);
 
-        // Set an empty view on the widget
-        //views.setEmptyView(R.id.ingredients_widget, R.id.empty_widget_view);
+        views.setEmptyView(R.id.ingredients_widget, R.id.empty_widget_view);
+
 
         // Instruct the widget manager to update the widget
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients_widget);
         appWidgetManager.updateAppWidget(appWidgetId, views);
-
     }
 
     @Override
@@ -66,6 +61,7 @@ public class BakeItWidget extends AppWidgetProvider {
             PendingIntent startAppIntent = PendingIntent.getActivity(context, 0, appIntent, 0);
 
             views.setPendingIntentTemplate(R.id.ingredients_widget, startAppIntent);
+            views.setViewVisibility(R.id.empty_widget_view, View.GONE);
             appWidgetManager.updateAppWidget(appWidgetIds, views);
         }
     }
@@ -73,6 +69,9 @@ public class BakeItWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.bake_it_widget);
+        views.setEmptyView(R.id.ingredients_widget, R.id.empty_widget_view);
+        views.setViewVisibility(R.id.empty_widget_view, View.VISIBLE);
     }
 
     @Override
