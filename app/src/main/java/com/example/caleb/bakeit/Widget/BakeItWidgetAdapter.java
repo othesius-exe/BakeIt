@@ -10,9 +10,7 @@ import com.example.caleb.bakeit.R;
 import com.example.caleb.bakeit.Recipe;
 import com.example.caleb.bakeit.RecipeIngredients;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
@@ -36,14 +34,19 @@ public class BakeItWidgetAdapter implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onDataSetChanged() {
+
+
         SharedPreferences preferences = mContext.getSharedPreferences("recipe", Context.MODE_PRIVATE);
+
 
         Gson gson = new Gson();
         String json = preferences.getString("recipe", "");
 
-        Type type = new TypeToken<ArrayList<Recipe>>(){}.getType();
         mRecipe = gson.fromJson(json, Recipe.class);
-        mIngredientsArray = mRecipe.getIngredients();
+
+        if (mRecipe != null) {
+            mIngredientsArray = mRecipe.getIngredients();
+        }
     }
 
     @Override
